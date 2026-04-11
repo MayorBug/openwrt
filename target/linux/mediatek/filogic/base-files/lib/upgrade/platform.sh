@@ -76,11 +76,24 @@ xiaomi_initial_setup()
 
 ws1610_get_boot_slot()
 {
-	local tmp="/tmp/ws1610-woem.bin"
+	local tmp
 	local val
 
-	mtd -l 0x20000 dump woem >"$tmp" || return 1
+	tmp="$(mktemp -t ws1610-woem.XXXXXX)" || return 1
+	mtd -l 0x20000 dump woem >"$tmp" || {
+		rm -f "$tmp"
+		return 1
+	}
+
+	val="$(dd if="$tmp" bs=1 count=4 2>/dev/null)"
+	[ "$val" = "WTUP" ] || {
+		echo "invalid WS1610 woem header: $val" >&2
+		rm -f "$tmp"
+		return 1
+	}
+
 	val="$(dd if="$tmp" bs=1 skip=4 count=1 2>/dev/null | hexdump -v -e '1/1 "%02x"')"
+	rm -f "$tmp"
 
 	case "$val" in
 	00)
@@ -99,7 +112,8 @@ ws1610_get_boot_slot()
 ws1610_set_boot_slot()
 {
 	local target="$1"
-	local tmp="/tmp/ws1610-woem.bin"
+	local tmp
+	local val
 	local byte
 
 	case "$target" in
@@ -115,9 +129,30 @@ ws1610_set_boot_slot()
 		;;
 	esac
 
-	mtd -l 0x20000 dump woem >"$tmp" || return 1
-	printf '%b' "$byte" | dd of="$tmp" bs=1 seek=4 conv=notrunc 2>/dev/null || return 1
-	mtd write "$tmp" woem || return 1
+	tmp="$(mktemp -t ws1610-woem.XXXXXX)" || return 1
+	mtd -l 0x20000 dump woem >"$tmp" || {
+		rm -f "$tmp"
+		return 1
+	}
+
+	val="$(dd if="$tmp" bs=1 count=4 2>/dev/null)"
+	[ "$val" = "WTUP" ] || {
+		echo "invalid WS1610 woem header: $val" >&2
+		rm -f "$tmp"
+		return 1
+	}
+
+	printf '%b' "$byte" | dd of="$tmp" bs=1 seek=4 conv=notrunc 2>/dev/null || {
+		rm -f "$tmp"
+		return 1
+	}
+
+	mtd write "$tmp" woem || {
+		rm -f "$tmp"
+		return 1
+	}
+
+	rm -f "$tmp"
 }
 
 platform_do_upgrade() {
