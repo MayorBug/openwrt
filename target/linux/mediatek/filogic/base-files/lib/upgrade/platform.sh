@@ -74,6 +74,52 @@ xiaomi_initial_setup()
 	esac
 }
 
+ws1610_get_boot_slot()
+{
+	local tmp="/tmp/ws1610-woem.bin"
+	local val
+
+	mtd -l 0x20000 dump woem >"$tmp" || return 1
+	val="$(dd if="$tmp" bs=1 skip=4 count=1 2>/dev/null | hexdump -v -e '1/1 "%02x"')"
+
+	case "$val" in
+	00)
+		echo "ubi"
+		;;
+	01)
+		echo "ubi2"
+		;;
+	*)
+		echo "invalid WS1610 slot selector: $val" >&2
+		return 1
+		;;
+	esac
+}
+
+ws1610_set_boot_slot()
+{
+	local target="$1"
+	local tmp="/tmp/ws1610-woem.bin"
+	local byte
+
+	case "$target" in
+	ubi)
+		byte='\x00'
+		;;
+	ubi2)
+		byte='\x01'
+		;;
+	*)
+		echo "invalid WS1610 target slot: $target" >&2
+		return 1
+		;;
+	esac
+
+	mtd -l 0x20000 dump woem >"$tmp" || return 1
+	printf '%b' "$byte" | dd of="$tmp" bs=1 seek=4 conv=notrunc 2>/dev/null || return 1
+	mtd write "$tmp" woem || return 1
+}
+
 platform_do_upgrade() {
 	local board=$(board_name)
 
@@ -165,10 +211,41 @@ platform_do_upgrade() {
 	buffalo,wsr-6000ax8|\
 	cudy,wr3000h-v1|\
 	cudy,wr3000p-v1|\
-	huasifei,wh3000-pro-nand|\
-	huasifei,ws1610)
+	huasifei,wh3000-pro-nand)
 		CI_UBIPART="ubi"
 		nand_do_upgrade "$1"
+		;;
+	huasifei,ws1610)
+		local current_slot target_slot
+
+		current_slot="$(ws1610_get_boot_slot)" || nand_do_upgrade_failed
+
+		case "$current_slot" in
+		ubi)
+			target_slot="ubi2"
+			;;
+		ubi2)
+			target_slot="ubi"
+			;;
+		*)
+			echo "failed to determine current WS1610 boot slot" >&2
+			nand_do_upgrade_failed
+			;;
+		esac
+
+		echo "Current slot: $current_slot"
+		echo "Upgrading inactive slot: $target_slot"
+
+		CI_UBIPART="$target_slot"
+		nand_do_flash_file "$1" || nand_do_upgrade_failed
+
+		if nand_do_restore_config && sync && ws1610_set_boot_slot "$target_slot" && sync; then
+			echo "sysupgrade successful"
+			umount -a
+			reboot -f
+		fi
+
+		nand_do_upgrade_failed
 		;;
 	cudy,re3000-v1|\
 	cudy,wr3000-v1|\
