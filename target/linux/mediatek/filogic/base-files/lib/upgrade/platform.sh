@@ -76,11 +76,24 @@ xiaomi_initial_setup()
 
 ws1610_get_boot_slot()
 {
-	local tmp="/tmp/ws1610-woem.bin"
+	local tmp
 	local val
 
-	mtd -l 0x20000 dump woem >"$tmp" || return 1
+	tmp="$(mktemp -t ws1610-woem.XXXXXX)" || return 1
+	mtd -l 0x20000 dump woem >"$tmp" || {
+		rm -f "$tmp"
+		return 1
+	}
+
+	val="$(dd if="$tmp" bs=1 count=4 2>/dev/null)"
+	[ "$val" = "WTUP" ] || {
+		v "invalid WS1610 woem header: $val"
+		rm -f "$tmp"
+		return 1
+	}
+
 	val="$(dd if="$tmp" bs=1 skip=4 count=1 2>/dev/null | hexdump -v -e '1/1 "%02x"')"
+	rm -f "$tmp"
 
 	case "$val" in
 	00)
@@ -90,7 +103,7 @@ ws1610_get_boot_slot()
 		echo "ubi2"
 		;;
 	*)
-		echo "invalid WS1610 slot selector: $val" >&2
+		v "invalid WS1610 slot selector: $val"
 		return 1
 		;;
 	esac
@@ -99,7 +112,8 @@ ws1610_get_boot_slot()
 ws1610_set_boot_slot()
 {
 	local target="$1"
-	local tmp="/tmp/ws1610-woem.bin"
+	local tmp
+	local val
 	local byte
 
 	case "$target" in
@@ -110,14 +124,35 @@ ws1610_set_boot_slot()
 		byte='\x01'
 		;;
 	*)
-		echo "invalid WS1610 target slot: $target" >&2
+		v "invalid WS1610 target slot: $target"
 		return 1
 		;;
 	esac
 
-	mtd -l 0x20000 dump woem >"$tmp" || return 1
-	printf '%b' "$byte" | dd of="$tmp" bs=1 seek=4 conv=notrunc 2>/dev/null || return 1
-	mtd write "$tmp" woem || return 1
+	tmp="$(mktemp -t ws1610-woem.XXXXXX)" || return 1
+	mtd -l 0x20000 dump woem >"$tmp" || {
+		rm -f "$tmp"
+		return 1
+	}
+
+	val="$(dd if="$tmp" bs=1 count=4 2>/dev/null)"
+	[ "$val" = "WTUP" ] || {
+		v "invalid WS1610 woem header: $val"
+		rm -f "$tmp"
+		return 1
+	}
+
+	printf '%b' "$byte" | dd of="$tmp" bs=1 seek=4 conv=notrunc 2>/dev/null || {
+		rm -f "$tmp"
+		return 1
+	}
+
+	mtd write "$tmp" woem || {
+		rm -f "$tmp"
+		return 1
+	}
+
+	rm -f "$tmp"
 }
 
 platform_do_upgrade() {
@@ -228,19 +263,19 @@ platform_do_upgrade() {
 			target_slot="ubi"
 			;;
 		*)
-			echo "failed to determine current WS1610 boot slot" >&2
+			v "failed to determine current WS1610 boot slot"
 			nand_do_upgrade_failed
 			;;
 		esac
 
-		echo "Current slot: $current_slot"
-		echo "Upgrading inactive slot: $target_slot"
+		v "WS1610 current slot: $current_slot"
+		v "WS1610 upgrading inactive slot: $target_slot"
 
 		CI_UBIPART="$target_slot"
 		nand_do_flash_file "$1" || nand_do_upgrade_failed
 
 		if nand_do_restore_config && sync && ws1610_set_boot_slot "$target_slot" && sync; then
-			echo "sysupgrade successful"
+			v "WS1610 sysupgrade successful"
 			umount -a
 			reboot -f
 		fi
