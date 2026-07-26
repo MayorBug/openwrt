@@ -1,0 +1,117 @@
+name: Build WS1610 transition release
+
+on:
+  push:
+    branches:
+      - ws1610-transition
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ws1610-transition-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.repository == 'MayorBug/openwrt' && github.ref == 'refs/heads/ws1610-transition'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+
+    steps:
+      - name: Checkout transition branch
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set reproducible source branch
+        run: git checkout -B ws1610-transition "$GITHUB_SHA"
+
+      - name: Free runner disk space
+        run: |
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          df -h /
+
+      - name: Install OpenWrt build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends \
+            build-essential clang flex bison g++ gawk gcc-multilib \
+            g++-multilib gettext git libncurses5-dev libssl-dev \
+            python3-setuptools rsync swig unzip zlib1g-dev file wget
+
+      - name: Cache source downloads
+        uses: actions/cache@v4
+        with:
+          path: dl
+          key: ws1610-transition-dl-${{ hashFiles('feeds.conf.default', 'package/**/*.mk') }}
+          restore-keys: |
+            ws1610-transition-dl-
+
+      - name: Refresh feeds
+        run: |
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+
+      - name: Run transition smoke tests
+        run: |
+          ./scripts/ws1610-transition-smoke.sh
+          for script in \
+            package/utils/ws1610-transition/files/usr/libexec/ws1610-transition-* \
+            scripts/ws1610-transition-build.sh \
+            scripts/ws1610-transition-test.sh; do
+              sh -n "$script"
+          done
+
+      - name: Build transition release
+        shell: bash
+        run: |
+          set -o pipefail
+          if ! env JOBS="$(nproc)" V=s ./scripts/ws1610-transition-build.sh \
+            2>&1 | tee "$RUNNER_TEMP/ws1610-transition-parallel.log"; then
+              echo 'Parallel build failed; retrying serially with completed output.'
+              env JOBS=1 V=s ./scripts/ws1610-transition-build.sh \
+                2>&1 | tee "$RUNNER_TEMP/ws1610-transition-serial.log"
+          fi
+
+      - name: Validate release archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          short_sha=${GITHUB_SHA::12}
+          archive="bin/targets/mediatek/filogic/ws1610-transition-v1-$short_sha.tar.gz"
+          test -s "$archive"
+          mkdir "$RUNNER_TEMP/release"
+          tar -xzf "$archive" -C "$RUNNER_TEMP/release"
+          (
+            cd "$RUNNER_TEMP/release"
+            sha256sum -c sha256sums
+          )
+          grep -Fxq "source_commit=$GITHUB_SHA" \
+            "$RUNNER_TEMP/release/build-provenance.txt"
+          grep -Fxq 'source_branch=ws1610-transition' \
+            "$RUNNER_TEMP/release/build-provenance.txt"
+          magic=$(dd if="$RUNNER_TEMP/release/ws1610-vendor-to-ubi.bin" \
+            bs=1 skip=65536 count=4 2>/dev/null | od -An -tx1 | tr -d ' \n')
+          test "$magic" = 55424923
+          archive_name=$(basename "$archive")
+          sha256sum "$archive" | sed "s#  .*#  $archive_name#" > "$archive.sha256"
+          printf 'ARCHIVE=%s\n' "$archive" >> "$GITHUB_ENV"
+          printf 'CHECKSUM=%s\n' "$archive.sha256" >> "$GITHUB_ENV"
+          printf 'RELEASE_TAG=ws1610-transition-v1-ci-%s\n' "$short_sha" >> "$GITHUB_ENV"
+
+      - name: Publish per-commit prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release $RELEASE_TAG already exists; leaving its assets unchanged."
+            exit 0
+          fi
+          gh release create "$RELEASE_TAG" "$ARCHIVE" "$CHECKSUM" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "WS1610 transition $GITHUB_SHA" \
+            --notes "Automated one-shot WS1610 vendor-to-UBI transition build from commit $GITHUB_SHA. The release archive contains checksums and source provenance. Keep a verified vendor backup before use." \
+            --prerelease

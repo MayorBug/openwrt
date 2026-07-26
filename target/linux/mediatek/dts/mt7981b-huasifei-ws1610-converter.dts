@@ -1,0 +1,58 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+
+/dts-v1/;
+
+#include "mt7981b-huasifei-ws1610-ubi.dts"
+
+/ {
+	model = "Huasifei WS1610 (RAM-only UBI converter)";
+	compatible = "huasifei,ws1610-converter", "mediatek,mt7981b";
+
+	chosen {
+		/delete-property/ rootdisk;
+		bootargs = "console=ttyS0,115200 root=/dev/ram0 panic=-1";
+	};
+};
+
+&spi0 {
+	nand@0 {
+		partitions {
+			partition@0 {
+				/delete-property/ read-only;
+			};
+
+			partition@100000 {
+				/delete-property/ compatible;
+				label = "ubi-convert";
+			};
+		};
+	};
+};
+
+&eth {
+	status = "disabled";
+};
+
+&fan {
+	status = "disabled";
+};
+
+&pwm {
+	status = "disabled";
+};
+
+&watchdog {
+	status = "disabled";
+};
+
+&wifi {
+	status = "disabled";
+};
+
+&xhci {
+	status = "disabled";
+};
+
+&usb_phy {
+	status = "disabled";
+};

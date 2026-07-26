@@ -1,0 +1,36 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+
+. /lib/functions.sh
+. /lib/functions/system.sh
+
+[ "$(board_name)" = 'huasifei,ws1610-ubi' ] || exit 0
+
+configure_radio() {
+	local radio="$1" band suffix
+	band="$(uci -q get "wireless.$radio.band")"
+	case "$band" in
+	2g) suffix=2G ;;
+	5g) suffix=5G ;;
+	*) return 0 ;;
+	esac
+
+	uci set "wireless.$radio.disabled=0"
+	config_foreach configure_iface wifi-iface "$radio" "$suffix"
+}
+
+configure_iface() {
+	local section="$1" radio="$2" suffix="$3" device
+	config_get device "$section" device
+	[ "$device" = "$radio" ] || return 0
+	uci set "wireless.$section.network=lan"
+	uci set "wireless.$section.mode=ap"
+	uci set "wireless.$section.ssid=OpenWrt-WS1610-$suffix"
+	uci set "wireless.$section.encryption=none"
+}
+
+config_load wireless
+config_foreach configure_radio wifi-device
+uci commit wireless
+
+exit 0

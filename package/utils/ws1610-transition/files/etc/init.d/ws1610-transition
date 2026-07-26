@@ -1,0 +1,10 @@
+#!/bin/sh /etc/rc.common
+# SPDX-License-Identifier: GPL-2.0-only
+
+START=99
+STOP=01
+
+start() {
+	/usr/libexec/ws1610-transition-dispatch </dev/console \
+		>/dev/console 2>&1 &
+}

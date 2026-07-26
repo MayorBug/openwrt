@@ -1,0 +1,88 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+
+set -eu
+
+. /usr/libexec/ws1610-transition-common.sh
+
+ASSETS=/usr/share/ws1610-converter
+READBACK=/tmp/ws1610-readback.bin
+
+[ "$(ws_board_name)" = 'huasifei,ws1610-converter' ] || exit 0
+touch /tmp/ws1610-converter-active
+ws_led_status preflight
+ws_log 'running RAM-only conversion preflight'
+
+grep -qw 'root=/dev/ram0' /proc/cmdline ||
+	ws_fail 'converter was not booted with the RAM root'
+[ ! -e /sys/class/ubi/ubi0 ] || ws_fail 'UBI was attached before conversion'
+
+ws_check_mtd bl2 0x0000000 0x0100000 >/dev/null
+ubi_mtd="$(ws_check_mtd ubi-convert 0x0100000 0x0ff00000)"
+[ "$(find /sys/class/mtd -maxdepth 1 -name 'mtd[0-9]*' ! -name '*ro' | wc -l)" -eq 2 ] ||
+	ws_fail 'converter does not see the two-part raw NAND layout'
+
+[ -d "$ASSETS" ] || ws_fail 'embedded conversion assets are missing'
+(
+	cd "$ASSETS"
+	sha256sum -c payload.sha256
+) || ws_fail 'embedded conversion asset validation failed'
+
+ws_check_factory "$ASSETS/Factory.bin"
+[ "$(ws_file_size "$ASSETS/final-bl2.bin")" -le 1048576 ] ||
+	ws_fail 'final BL2 exceeds 1 MiB'
+[ "$(ws_file_size "$ASSETS/final-fip.bin")" -le 2097152 ] ||
+	ws_fail 'final FIP exceeds 2 MiB'
+fit_check_sign -f "$ASSETS/recovery.itb" >/dev/null ||
+	ws_fail 'recovery FIT validation failed'
+fit_check_sign -f "$ASSETS/setup.itb" >/dev/null ||
+	ws_fail 'production FIT validation failed'
+
+dd if="$ASSETS/Factory.bin" of=/tmp/Factory-4k.bin bs=4096 count=1 2>/dev/null
+[ "$(ws_file_size /tmp/Factory-4k.bin)" -eq 4096 ] ||
+	ws_fail 'unable to prepare the 4 KiB Factory payload'
+
+ws_log 'all required data is in RAM and verified'
+ws_led_status destructive
+ws_log 'destructive conversion started; do not remove power'
+
+ubidetach -m "${ubi_mtd#mtd}" 2>/dev/null || true
+ubiformat "/dev/$ubi_mtd" -y
+ubiattach /dev/ubi_ctrl -m "${ubi_mtd#mtd}" -d 0
+[ -e /sys/class/ubi/ubi0 ] || ws_fail 'unable to attach freshly formatted UBI'
+
+write_volume() {
+	local name="$1" type="$2" file="$3" size vol expected actual
+	size="$(ws_file_size "$file")"
+	ubimkvol /dev/ubi0 -N "$name" -s "$size" -t "$type"
+	vol="$(ws_find_volume ubi0 "$name")" || ws_fail "volume $name was not created"
+	ubiupdatevol "/dev/$vol" "$file"
+	expected="$(sha256sum "$file" | awk '{print $1}')"
+	actual="$(ws_hash_prefix "/dev/$vol" "$size" "$READBACK")"
+	[ "$actual" = "$expected" ] || ws_fail "$name volume readback mismatch"
+	ws_log "$name volume verified"
+}
+
+write_volume factory static /tmp/Factory-4k.bin
+write_volume fip static "$ASSETS/final-fip.bin"
+write_volume recovery dynamic "$ASSETS/recovery.itb"
+write_volume fit dynamic "$ASSETS/setup.itb"
+
+for volume in factory fip recovery fit; do
+	ws_find_volume ubi0 "$volume" >/dev/null || ws_fail "final volume $volume is missing"
+done
+
+ws_log 'all UBI volumes verified; writing final BL2 last'
+mtd erase bl2
+mtd write "$ASSETS/final-bl2.bin" bl2
+mtd dump bl2 > "$READBACK"
+bl2_size="$(ws_file_size "$ASSETS/final-bl2.bin")"
+expected="$(sha256sum "$ASSETS/final-bl2.bin" | awk '{print $1}')"
+actual="$(head -c "$bl2_size" "$READBACK" | sha256sum | awk '{print $1}')"
+[ "$actual" = "$expected" ] || ws_fail 'BL2 readback mismatch'
+
+sync
+ws_log 'conversion complete; all volumes and BL2 verified'
+ws_led_status success
+sleep 5
+reboot -f

@@ -25,6 +25,24 @@ define Build/mt7981-bl31-uboot
 	cat $(STAGING_DIR_IMAGE)/mt7981_$1-u-boot.fip >> $@
 endef
 
+define Build/prepend-64k
+	dd if=/dev/zero of=$@.new bs=64k count=1
+	cat $@ >> $@.new
+	mv $@.new $@
+endef
+
+define Build/ws1610-transition-ubinize
+	cp $@ $@.kernel
+	sh $(TOPDIR)/scripts/ubinize-image.sh \
+		--kernel $@.kernel \
+		$(foreach part,$(UBINIZE_PARTS),--part $(part)) \
+		$@.new \
+		-p $(BLOCKSIZE:%k=%KiB) -m $(PAGESIZE) \
+		$(UBINIZE_OPTS)
+	mv $@.new $@
+	rm $@.kernel
+endef
+
 define Build/mt7986-bl2
 	cat $(STAGING_DIR_IMAGE)/mt7986-$1-bl2.img >> $@
 endef
@@ -2051,6 +2069,45 @@ define Device/huasifei_ws1610-ubi
   ARTIFACT/bl31-uboot.fip := mt7981-bl31-uboot huasifei_ws1610-ubi
 endef
 TARGET_DEVICES += huasifei_ws1610-ubi
+
+WS1610_TRANSITION_INSTALLER ?= $(TOPDIR)/target/linux/mediatek/image/ws1610-transition-installer.placeholder
+
+define Device/huasifei_ws1610-transition
+  DEVICE_VENDOR := Huasifei
+  DEVICE_MODEL := WS1610
+  DEVICE_VARIANT := one-shot vendor-to-UBI transition
+  DEVICE_DTS := mt7981b-huasifei-ws1610-transition
+  DEVICE_DTS_DIR := ../dts
+  DEVICE_PACKAGES := ws1610-transition uboot-mkimage dumpimage \
+	fit-check-sign ubi-utils mtd -uboot-envtools
+  SUPPORTED_DEVICES := huasifei,ws1610-transition
+  UBINIZE_OPTS := -E 5
+  UBINIZE_PARTS := installer=:$(WS1610_TRANSITION_INSTALLER)
+  BLOCKSIZE := 128k
+  PAGESIZE := 2048
+  IMAGE_SIZE := 114688k
+  KERNEL_INITRAMFS_SUFFIX := -stage.itb
+  KERNEL_INITRAMFS := kernel-bin | lzma | \
+	fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb with-initrd | pad-to 64k
+  ARTIFACTS := vendor-to-ubi.bin
+  ARTIFACT/vendor-to-ubi.bin := append-image-stage initramfs-stage.itb | \
+	ws1610-transition-ubinize | check-size $$(IMAGE_SIZE) | prepend-64k
+endef
+TARGET_DEVICES += huasifei_ws1610-transition
+
+define Device/huasifei_ws1610-converter
+  DEVICE_VENDOR := Huasifei
+  DEVICE_MODEL := WS1610
+  DEVICE_VARIANT := RAM-only UBI converter
+  DEVICE_DTS := mt7981b-huasifei-ws1610-converter
+  DEVICE_DTS_DIR := ../dts
+  DEVICE_PACKAGES := ws1610-transition -uboot-envtools
+  SUPPORTED_DEVICES := huasifei,ws1610-converter
+  KERNEL_INITRAMFS_SUFFIX := -converter.itb
+  KERNEL_INITRAMFS := kernel-bin | lzma | \
+	fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb with-initrd | pad-to 64k
+endef
+TARGET_DEVICES += huasifei_ws1610-converter
 
 define Device/imou_hx21
   DEVICE_VENDOR := Imou

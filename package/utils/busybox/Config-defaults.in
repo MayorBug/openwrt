@@ -393,9 +393,11 @@ config BUSYBOX_DEFAULT_FEATURE_BZIP2_DECOMPRESS
 	default n
 config BUSYBOX_DEFAULT_CPIO
 	bool
+	default y if TARGET_mediatek_filogic_DEVICE_huasifei_ws1610-transition
 	default n
 config BUSYBOX_DEFAULT_FEATURE_CPIO_O
 	bool
+	default y if TARGET_mediatek_filogic_DEVICE_huasifei_ws1610-transition
 	default n
 config BUSYBOX_DEFAULT_FEATURE_CPIO_P
 	bool
@@ -756,6 +758,8 @@ config BUSYBOX_DEFAULT_NPROC
 	default n
 config BUSYBOX_DEFAULT_OD
 	bool
+	default y if TARGET_mediatek_filogic_DEVICE_huasifei_ws1610-transition
+	default y if TARGET_mediatek_filogic_DEVICE_huasifei_ws1610-converter
 	default n
 config BUSYBOX_DEFAULT_PASTE
 	bool

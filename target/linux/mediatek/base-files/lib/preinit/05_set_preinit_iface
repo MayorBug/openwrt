@@ -1,5 +1,8 @@
 set_preinit_iface() {
 	case $(board_name) in
+	huasifei,ws1610-converter)
+		return 0
+		;;
 	bazis,ax3000wm|\
 	cudy,m3000-v1|\
 	cudy,m3000-v2-yt8821|\
@@ -23,6 +26,7 @@ set_preinit_iface() {
 		ifname=eth0
 		;;
 	huasifei,ws1610-ubi|\
+	huasifei,ws1610-transition|\
 	smartrg,sdg-841-t6|\
 	smartrg,sdg-8622|\
 	smartrg,sdg-8632|\

@@ -2,7 +2,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_DISTNAME:=u-boot
 PKG_VERSION:=2026.07
-PKG_RELEASE:=1
+PKG_RELEASE:=3
 
 PKG_SOURCE:=$(PKG_DISTNAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:= \
@@ -48,6 +48,17 @@ define Package/fit-check-sign/description
 	fit_check_sign validates uImage.FIT hashes and signatures
 endef
 
+define Package/uboot-mkimage
+	SECTION:=utils
+	CATEGORY:=Utilities
+	SUBMENU:=Boot Loaders
+	TITLE:=create U-Boot images on the target
+endef
+
+define Package/uboot-mkimage/description
+	mkimage creates legacy and FIT U-Boot images.
+endef
+
 define Package/uboot-envtools
 	SECTION:=utils
 	CATEGORY:=Utilities
@@ -89,7 +100,7 @@ define Build/Compile
 ifneq ($(CONFIG_PACKAGE_uboot-envtools),)
 	$(call Build/Compile/Default,envtools)
 endif
-ifneq ($(CONFIG_PACKAGE_dumpimage)$(CONFIG_PACKAGE_fit-check-sign),)
+ifneq ($(CONFIG_PACKAGE_dumpimage)$(CONFIG_PACKAGE_fit-check-sign)$(CONFIG_PACKAGE_uboot-mkimage),)
 	$(call Build/Compile/Default,cross_tools)
 endif
 
@@ -103,6 +114,11 @@ endef
 define Package/fit-check-sign/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/tools/fit_check_sign $(1)/usr/bin
+endef
+
+define Package/uboot-mkimage/install
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/tools/mkimage $(1)/usr/bin
 endef
 
 define Package/uboot-envtools/install
@@ -129,4 +145,5 @@ endef
 
 $(eval $(call BuildPackage,dumpimage))
 $(eval $(call BuildPackage,fit-check-sign))
+$(eval $(call BuildPackage,uboot-mkimage))
 $(eval $(call BuildPackage,uboot-envtools))

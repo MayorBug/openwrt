@@ -1,0 +1,128 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+
+set -eu
+
+. /usr/libexec/ws1610-transition-common.sh
+
+WORK=/tmp/ws1610-transition
+MAX_FIT_SIZE=$((64 * 1024 * 1024))
+
+[ "$(ws_board_name)" = 'huasifei,ws1610-transition' ] || exit 0
+mkdir "$WORK.lock" 2>/dev/null || ws_fail 'another staging process is active'
+trap 'rmdir "$WORK.lock" 2>/dev/null || true' EXIT
+
+ws_led_status prepare
+ws_log 'running self-contained staging initramfs'
+
+grep -qw 'root=/dev/ram0' /proc/cmdline ||
+	ws_fail 'staging system was not booted with the RAM root'
+
+ws_log 'validating the vendor layout'
+
+ws_check_mtd BL2 0x0000000 0x0100000 >/dev/null
+ws_check_mtd u-boot-env 0x0100000 0x0080000 >/dev/null
+ws_check_mtd Factory 0x0180000 0x0200000 >/dev/null
+ws_check_mtd FIP 0x0380000 0x0200000 >/dev/null
+ws_check_mtd woem 0x0580000 0x00a0000 >/dev/null
+ws_check_mtd ubi 0x0620000 0x07000000 >/dev/null
+ws_check_mtd ubi2 0x07620000 0x07000000 >/dev/null
+ws_check_mtd wtinfo 0x0e620000 0x00060000 >/dev/null
+ws_check_mtd nvram 0x0e680000 0x00060000 >/dev/null
+
+ws_select_transition_slot
+root_ubi="$WS_TRANSITION_UBI"
+root_mtd_name="$WS_TRANSITION_MTD_NAME"
+installer_vol="$WS_TRANSITION_INSTALLER"
+kernel_vol="$WS_TRANSITION_KERNEL"
+ws_log "selected transition payload in vendor $root_mtd_name ($root_ubi)"
+
+mem_kib="$(awk '/^MemAvailable:/ { print $2 }' /proc/meminfo)"
+[ "${mem_kib:-0}" -ge 262144 ] || ws_fail 'less than 256 MiB RAM is available'
+
+rm -rf "$WORK"
+mkdir -p "$WORK/installer" "$WORK/initroot" \
+	"$WORK/payload/usr/share/ws1610-converter"
+
+ws_log 'copying and validating the embedded installer'
+cat "/dev/$installer_vol" > "$WORK/installer.tar"
+tar -C "$WORK/installer" -xf "$WORK/installer.tar"
+[ -f "$WORK/installer/manifest.sha256" ] || ws_fail 'installer manifest is missing'
+(
+	cd "$WORK/installer"
+	sha256sum -c manifest.sha256
+) || ws_fail 'installer manifest validation failed'
+
+ws_log 'reading the complete 2 MiB Factory partition into RAM'
+mtd dump Factory > "$WORK/Factory.bin"
+ws_check_factory "$WORK/Factory.bin"
+
+payload="$WORK/payload/usr/share/ws1610-converter"
+for file in final-bl2.bin final-fip.bin recovery.itb setup.itb; do
+	[ -f "$WORK/installer/$file" ] || ws_fail "installer lacks $file"
+	cp "$WORK/installer/$file" "$payload/$file"
+done
+cp "$WORK/Factory.bin" "$payload/Factory.bin"
+(
+	cd "$payload"
+	sha256sum Factory.bin final-bl2.bin final-fip.bin recovery.itb setup.itb \
+		> payload.sha256
+)
+
+ws_log 'assembling the device-specific conversion initramfs'
+(
+	cd "$WORK/payload"
+	find . -print | sort | cpio -o -H newc
+) > "$WORK/payload.cpio"
+(
+	cd "$WORK/initroot"
+	cpio -id < "$WORK/installer/initrd-base.cpio"
+	cpio -idu < "$WORK/payload.cpio"
+	find . -print | sort | cpio -o -H newc
+) > "$WORK/initrd.cpio"
+gzip -9 < "$WORK/initrd.cpio" > "$WORK/initrd.cpio.gz"
+cp "$WORK/installer/kernel.lzma" "$WORK/kernel.lzma"
+cp "$WORK/installer/converter.dtb" "$WORK/converter.dtb"
+cp "$WORK/installer/converter.its" "$WORK/converter.its"
+
+(
+	cd "$WORK"
+	mkimage -f converter.its converter.itb
+)
+fit_check_sign -f "$WORK/converter.itb" >/dev/null ||
+	ws_fail 'generated conversion FIT failed hash validation'
+dumpimage -l "$WORK/converter.itb" >/dev/null ||
+	ws_fail 'generated conversion FIT is malformed'
+
+fit_size="$(ws_file_size "$WORK/converter.itb")"
+[ "$fit_size" -le "$MAX_FIT_SIZE" ] ||
+	ws_fail 'generated conversion FIT exceeds 64 MiB'
+fit_hash="$(sha256sum "$WORK/converter.itb" | awk '{print $1}')"
+
+leb_size="$(cat "/sys/class/ubi/$root_ubi/eraseblock_size")"
+avail_pebs="$(cat "/sys/class/ubi/$root_ubi/avail_eraseblocks")"
+installer_pebs="$(cat "/sys/class/ubi/$installer_vol/reserved_ebs")"
+kernel_pebs="$(cat "/sys/class/ubi/$kernel_vol/reserved_ebs")"
+needed_pebs=$(( (fit_size + leb_size - 1) / leb_size ))
+[ $((avail_pebs + installer_pebs + kernel_pebs)) -ge $((needed_pebs + 2)) ] ||
+	ws_fail 'not enough UBI space for the conversion FIT'
+
+ws_log 'all inputs verified; replacing the vendor kernel volume'
+ubirmvol "/dev/$root_ubi" -N installer
+ubirmvol "/dev/$root_ubi" -N kernel
+ubimkvol "/dev/$root_ubi" -N kernel -s "$fit_size" -t static
+kernel_vol="$(ws_find_volume "$root_ubi" kernel)" ||
+	ws_fail 'new kernel volume is missing'
+ubiupdatevol "/dev/$kernel_vol" "$WORK/converter.itb"
+
+[ "$(cat "/sys/class/ubi/$kernel_vol/data_bytes")" -eq "$fit_size" ] ||
+	ws_fail 'kernel volume reports the wrong data size'
+readback_hash="$(sha256sum "/dev/$kernel_vol" | awk '{print $1}')"
+[ "$readback_hash" = "$fit_hash" ] || ws_fail 'kernel volume readback mismatch'
+
+sync
+ws_log 'conversion FIT verified in UBI; rebooting into the RAM-only converter'
+path="$(ws_led_path lan)"
+[ -z "$path" ] || ws_led_on "$path"
+sleep 2
+reboot -f

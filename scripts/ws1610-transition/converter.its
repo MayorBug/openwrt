@@ -1,0 +1,61 @@
+/dts-v1/;
+
+/ {
+	description = "Huasifei WS1610 RAM-only UBI converter";
+	#address-cells = <1>;
+
+	images {
+		kernel {
+			description = "OpenWrt conversion kernel";
+			data = /incbin/("kernel.lzma");
+			type = "kernel";
+			arch = "arm64";
+			os = "linux";
+			compression = "lzma";
+			load = <0x50000000>;
+			entry = <0x50000000>;
+
+			hash-1 {
+				algo = "sha256";
+			};
+		};
+
+		ramdisk {
+			description = "OpenWrt conversion initramfs";
+			data = /incbin/("initrd.cpio.gz");
+			type = "ramdisk";
+			arch = "arm64";
+			os = "linux";
+			compression = "none";
+			load = <0x58000000>;
+
+			hash-1 {
+				algo = "sha256";
+			};
+		};
+
+		fdt {
+			description = "WS1610 raw NAND conversion device tree";
+			data = /incbin/("converter.dtb");
+			type = "flat_dt";
+			arch = "arm64";
+			compression = "none";
+			load = <0x5f000000>;
+
+			hash-1 {
+				algo = "sha256";
+			};
+		};
+	};
+
+	configurations {
+		default = "config-1";
+
+		config-1 {
+			description = "Automatic WS1610 all-in-UBI conversion";
+			kernel = "kernel";
+			ramdisk = "ramdisk";
+			fdt = "fdt";
+		};
+	};
+};

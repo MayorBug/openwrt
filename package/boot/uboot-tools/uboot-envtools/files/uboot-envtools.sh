@@ -36,13 +36,16 @@ ubootenv_add_app_config() {
 	local envsize
 	local secsize
 	local numsec
+	local config
 	config_get cfgtype "$1" TYPE
 	config_get dev "$1" dev
 	config_get offset "$1" offset
 	config_get envsize "$1" envsize
 	config_get secsize "$1" secsize
 	config_get numsec "$1" numsec
-	grep -q "^[[:space:]]*${dev}[[:space:]]*${offset}" "/etc/fw_${cfgtype#uboot}.config" || echo "$dev $offset $envsize $secsize $numsec" >>"/etc/fw_${cfgtype#uboot}.config"
+	config="/etc/fw_${cfgtype#uboot}.config"
+	grep -q "^[[:space:]]*${dev}[[:space:]]*${offset}" "$config" 2>/dev/null ||
+		echo "$dev $offset $envsize $secsize $numsec" >>"$config"
 }
 
 ubootenv_add_mtd() {

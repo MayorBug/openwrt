@@ -1,0 +1,1323 @@
+❯ tio -b 115200 /dev/ttyUSB0
+[21:19:23.218] tio c43d2f6
+[21:19:23.218] Press ctrl-t q to quit
+[21:19:23.219] Connected to /dev/ttyUSB0
+
+root@OpenWrt:/# [  174.627327] mtk_soc_eth 15100000.ethernet eth1: Link is Down
+[  174.633109] br-lan: port 1(eth1) entered disabled state
+[  177.699792] mtk_soc_eth 15100000.ethernet eth1: Link is Up - 1Gbps/Full - flow control rx/tx
+[  177.708284] br-lan: port 1(eth1) entered blocking state
+[  177.713513] br-lan: port 1(eth1) entered forwarding state
+
+root@OpenWrt:/# sysupgrade -n -F /tmp/ws1610-vendor-to-ubi.bin
+Sun Dec 21 08:54:22 CST 2025 upgrade: Image metadata not present
+wt: board name failed(/M01K45)
+Image check failed but --force given - will update anyway!
+Sun Dec 21 08:54:22 CST 2025 upgrade: Commencing upgrade. Closing all shell sessions.
+Watchdog handover: fd=3
+- watchdog -
+killall: telnetd: no process killed
+Sun Dec 21 08:54:22 CST 2025 upgrade: Sending TERM to remaining processes ... urngd logd rpcd wtboard netifd odhcpd uhttpd wttool xl2tpd dnsmasq starter charon sh sh ntpd mtk_dut sh sleep ubusd
+ipsec_starter[4414]: charon stopped after 400 ms
+ipsec_starter[4414]: ipsec starter stopped
+Sun Dec 21 08:54:25 CST 2025 upgrade: Sending KILL to remaining processes ...
+[  216.598901] sh (5505): drop_caches: 3
+Sun Dec 21 08:54:27 CST 2025 upgrade: Switching to ramdisk...
+[  217.713188] UBIFS (ubi0:2): background thread "ubifs_bgt0_2" stops
+[  217.725571] UBIFS (ubi0:2): un-mount UBI device 0
+Sun Dec 21 14:54:28 UTC 2025 upgrade: Performing system upgrade...
+mtd7: 07000000 00020000 "ubi2"
+782+0 records in
+782+0 records out
+ubiformat: mtd7 (nand), size 117440512 bytes (112.0 MiB), 896 eraseblocks of 131072 bytes (128.0 KiB), min. I/O size 2048 bytes
+libscan: scanning eraseblock 895 -- 100 % complete
+ubiformat: 896 eraseblocks have valid erase counter, mean value is 2
+ubiformat: flashing eraseblock 390 -- 100 % complete
+ubiformat: formatting eraseblock 895 -- 100 % complete
+change part
+Sun Dec 21 14:54:53 UTC 2025 upgrade: Upgrade completed
+Sun Dec 21 14:54:54 UTC 2025 upgrade: Rebooting [  244.325242] reboot: Restarting system
+system...
+umoun
+F0: 102B 0000
+FA: 1040 0000
+FA: 1040 0000 [0200]
+F9: 0000 0000
+V0: 0000 0000 [0001]
+00: 0000 0000
+BP: 2400 0041 [0000]
+G0: 1190 0000
+EC: 0000 0000 [1000]
+T0: 0000 024B [010F]
+Jump to BL
+
+NOTICE:  BL2: v2.7(release):dd71bc3c
+NOTICE:  BL2: Built : 11:43:41, Jun 30 2024
+NOTICE:  WDT: disabled
+NOTICE:  EMI: Using DDR4 settings
+
+dump toprgu registers data:
+1001c000 | 00000000 0000ffe0 00000000 00000000
+1001c010 | 00000fff 00000000 00f00000 00000000
+1001c020 | 00000000 00000000 00000000 00000000
+1001c030 | 003c0003 003c0003 00000000 00000000
+1001c040 | 00000000 00000000 00000000 00000000
+1001c050 | 00000000 00000000 00000000 00000000
+1001c060 | 00000000 00000000 00000000 00000000
+1001c070 | 00000000 00000000 00000000 00000000
+1001c080 | 00000000 00000000 00000000 00000000
+
+dump drm registers data:
+1001d000 | 00000000 00000000 00000000 00000000
+1001d010 | 00000000 00000000 00000000 00000000
+1001d020 | 00000000 00000000 00000000 00000000
+1001d030 | 00a003f1 000000ff 00100000 00000000
+1001d040 | 00027e71 000200a0 00020303 000000ff
+1001d050 | 00000000 00000000 00000000 00000000
+1001d060 | 00000002 00000000 00000000 00000000
+drm: 500 = 0xc
+[DDR Reserve] ddr reserve mode not be enabled yet
+DDR RESERVE Success 0
+[EMI] ComboMCP not ready, using default setting
+BYTE_swap:0
+BYTE_swap:0
+Window Sum 568, worse bit 0, min window 68
+Window Sum 540, worse bit 8, min window 64
+[TxChooseVref] Worse bit 10, Min win 24, Win sum 422, Final Vref 42
+Window Sum 236, worse bit 5, min window 20
+Window Sum 178, worse bit 11, min window 12
+Window Sum 270, worse bit 1, min window 30
+Window Sum 238, worse bit 11, min window 20
+Window Sum 294, worse bit 3, min window 32
+Window Sum 270, worse bit 11, min window 24
+Window Sum 312, worse bit 1, min window 34
+Window Sum 302, worse bit 10, min window 34
+Window Sum 330, worse bit 3, min window 36
+Window Sum 314, worse bit 10, min window 34
+Window Sum 344, worse bit 3, min window 40
+Window Sum 342, worse bit 10, min window 40
+Window Sum 360, worse bit 1, min window 42
+Window Sum 354, worse bit 10, min window 42
+Window Sum 374, worse bit 1, min window 44
+Window Sum 364, worse bit 10, min window 42
+Window Sum 388, worse bit 1, min window 46
+Window Sum 380, worse bit 10, min window 44
+Window Sum 396, worse bit 1, min window 48
+Window Sum 388, worse bit 10, min window 46
+Window Sum 410, worse bit 1, min window 48
+Window Sum 412, worse bit 11, min window 48
+Window Sum 418, worse bit 1, min window 50
+Window Sum 416, worse bit 10, min window 50
+Window Sum 428, worse bit 1, min window 50
+Window Sum 428, worse bit 10, min window 50
+Window Sum 442, worse bit 1, min window 50
+Window Sum 438, worse bit 10, min window 52
+Window Sum 448, worse bit 1, min window 54
+Window Sum 450, worse bit 11, min window 54
+Window Sum 454, worse bit 1, min window 54
+Window Sum 458, worse bit 8, min window 56
+Window Sum 462, worse bit 1, min window 56
+Window Sum 464, worse bit 10, min window 56
+Window Sum 472, worse bit 1, min window 56
+Window Sum 468, worse bit 11, min window 56
+Window Sum 482, worse bit 1, min window 58
+Window Sum 470, worse bit 10, min window 56
+NOTICE:  EMI: Detected DRAM size: 1024MB
+NOTICE:  EMI: complex R/W mem test passed
+NOTICE:  CPU: MT7981 (1300MHz)
+NOTICE:  SPI_NAND parses attributes from parameter page.
+NOTICE:  SPI_NAND Detected ID 0xef
+NOTICE:  Page size 2048, Block size 131072, size 268435456
+NOTICE:  Initializing NMBM ...
+NOTICE:  Signature found at block 2047 [0x0ffe0000]
+Reading from 0x0 to 0x7ffd44f8, size 0x10000 ... OK
+boot from ubi
+ubi0: attaching mtd7
+UBI: EOF marker found, PEBs from 386 will be erased
+ubi0: scanning is finished
+ubi0: attached mtd7 (name "ubi", size 112 MiB)
+ubi0: PEB size: 131072 bytes (128 KiB), LEB size: 126976 bytes
+ubi0: min./max. I/O unit sizes: 2048/2048, sub-page size 2048
+ubi0: VID header offset: 2048 (aligned 2048), data offset: 4096
+ubi0: good PEBs: 896, bad PEBs: 0, corrupted PEBs: 0
+ubi0: user volume: 2, internal volumes: 1, max. volumes count: 128
+ubi0: max/mean erase counter: 6/3, WL threshold: 4096, image sequence number: 609858647
+ubi0: available PEBs: 470, total reserved PEBs: 426, PEBs reserved for bad PEB handling: 38
+Reading from volume 'kernel' to 0x46000000, size 0x0 ... OK
+## Loading kernel from FIT Image at 46000000 ...
+   Using 'config-1' configuration
+   Trying 'kernel-1' kernel subimage
+     Description:  ARM64 OpenWrt Linux-6.18.38
+     Type:         Kernel Image
+     Compression:  lzma compressed
+     Data Start:   0x460000e8
+     Data Size:    4655919 Bytes = 4.4 MiB
+     Architecture: AArch64
+     OS:           Linux
+     Load Address: 0x48000000
+     Entry Point:  0x48000000
+     Hash algo:    crc32
+     Hash value:   5fb44389
+     Hash algo:    sha1
+     Hash value:   1bd6b84d8c28bb55766c973d945a1401ab90fb6a
+   Verifying Hash Integrity ... crc32+ sha1+ OK
+## Loading ramdisk from FIT Image at 46000000 ...
+   Using 'config-1' configuration
+   Trying 'initrd-1' ramdisk subimage
+     Description:  ARM64 OpenWrt huasifei_ws1610-transition initrd
+     Type:         RAMDisk Image
+     Compression:  Unknown Compression
+     Data Start:   0x46470d5c
+     Data Size:    3122420 Bytes = 3 MiB
+     Architecture: AArch64
+     OS:           Linux
+     Load Address: unavailable
+     Entry Point:  unavailable
+     Hash algo:    crc32
+     Hash value:   0d264f5a
+     Hash algo:    sha1
+     Hash value:   b60419fa98b5f1513ce85135ef4c1aceac038834
+   Verifying Hash Integrity ... crc32+ sha1+ OK
+WARNING: 'compression' nodes for ramdisks are deprecated, please fix your .its file!
+## Loading fdt from FIT Image at 46000000 ...
+   Using 'config-1' configuration
+   Trying 'fdt-1' fdt subimage
+     Description:  ARM64 OpenWrt huasifei_ws1610-transition device tree blob
+     Type:         Flat Device Tree
+     Compression:  uncompressed
+     Data Start:   0x4676b368
+     Data Size:    23212 Bytes = 22.7 KiB
+     Architecture: AArch64
+     Hash algo:    crc32
+     Hash value:   bbe46b25
+     Hash algo:    sha1
+     Hash value:   7cf3d27ab0b855bf93aa9b95c6a3f3acee5f681d
+   Verifying Hash Integrity ... crc32+ sha1+ OK
+   Booting using the fdt blob at 0x4676b368
+   Uncompressing Kernel Image
+   Loading Ramdisk to 7f4fe000, end 7f7f84f4 ... OK
+   Loading Device Tree to 000000007f4f5000, end 000000007f4fdaab ... OK
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0000000000 [0x410fd034]
+[    0.000000] Linux version 6.18.38 (georg@Precision-5680) (aarch64-openwrt-linux-musl-gcc (OpenWrt GCC 14.4.0 r35339-2de8f7da21) 14.4.0, GNU ld (GNU Binutils) 2.46.1) #0 SMP Mon Jul 20 18:01:23 2026
+[    0.000000] KASLR disabled due to lack of seed
+[    0.000000] Machine model: Huasifei WS1610 (vendor-to-UBI transition)
+[    0.000000] OF: reserved mem: 0x0000000042ff0000..0x0000000042ffffff (64 KiB) map non-reusable ramoops@42ff0000
+[    0.000000] OF: reserved mem: 0x0000000043000000..0x000000004302ffff (192 KiB) nomap non-reusable secmon@43000000
+[    0.000000] OF: reserved mem: 0x0000000047c80000..0x0000000047d7ffff (1024 KiB) nomap non-reusable wmcpu-reserved@47c80000
+[    0.000000] OF: reserved mem: 0x0000000047d80000..0x0000000047dbffff (256 KiB) nomap non-reusable wo-emi@47d80000
+[    0.000000] OF: reserved mem: 0x0000000047dc0000..0x0000000047ffffff (2304 KiB) nomap non-reusable wo-data@47dc0000
+[    0.000000] Zone ranges:
+[    0.000000]   DMA      [mem 0x0000000040000000-0x000000007fffffff]
+[    0.000000]   DMA32    empty
+[    0.000000]   Normal   empty
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x0000000040000000-0x0000000042ffffff]
+[    0.000000]   node   0: [mem 0x0000000043000000-0x000000004302ffff]
+[    0.000000]   node   0: [mem 0x0000000043030000-0x0000000047c7ffff]
+[    0.000000]   node   0: [mem 0x0000000047c80000-0x0000000047ffffff]
+[    0.000000]   node   0: [mem 0x0000000048000000-0x000000007fffffff]
+[    0.000000] Initmem setup node 0 [mem 0x0000000040000000-0x000000007fffffff]
+[    0.000000] psci: probing for conduit method from DT.
+[    0.000000] psci: PSCIv1.1 detected in firmware.
+[    0.000000] psci: Using standard PSCI v0.2 function IDs
+[    0.000000] psci: MIGRATE_INFO_TYPE not supported.
+[    0.000000] psci: SMC Calling Convention v1.2
+[    0.000000] percpu: Embedded 20 pages/cpu s43480 r8192 d30248 u81920
+[    0.000000] pcpu-alloc: s43480 r8192 d30248 u81920 alloc=20*4096
+[    0.000000] pcpu-alloc: [0] 0 [0] 1
+[    0.000000] Detected VIPT I-cache on CPU0
+[    0.000000] CPU features: detected: GICv3 CPU interface
+[    0.000000] CPU features: kernel page table isolation disabled by kernel configuration
+[    0.000000] alternatives: applying boot alternatives
+[    0.000000] Kernel command line: console=ttyS0,115200 root=/dev/ram0 panic=-1
+[    0.000000] printk: log buffer data + meta data: 131072 + 458752 = 589824 bytes
+[    0.000000] Dentry cache hash table entries: 131072 (order: 8, 1048576 bytes, linear)
+[    0.000000] Inode-cache hash table entries: 65536 (order: 7, 524288 bytes, linear)
+[    0.000000] software IO TLB: SWIOTLB bounce buffer size adjusted to 1MB
+[    0.000000] software IO TLB: area num 2.
+[    0.000000] software IO TLB: mapped [mem 0x000000007fb2b000-0x000000007fc2b000] (1MB)
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 262144
+[    0.000000] mem auto-init: stack:off, heap alloc:off, heap free:off
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=2, Nodes=1
+[    0.000000] rcu: Hierarchical RCU implementation.
+[    0.000000] rcu:     RCU restricting CPUs from NR_CPUS=4 to nr_cpu_ids=2.
+[    0.000000]  Tracing variant of Tasks RCU enabled.
+[    0.000000] rcu: RCU calculated value of scheduler-enlistment delay is 10 jiffies.
+[    0.000000] rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=2
+[    0.000000] RCU Tasks Trace: Setting shift to 1 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=2.
+[    0.000000] NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
+[    0.000000] GICv3: GIC: Using split EOI/Deactivate mode
+[    0.000000] GICv3: 640 SPIs implemented
+[    0.000000] GICv3: 0 Extended SPIs implemented
+[    0.000000] Root IRQ handler: gic_handle_irq
+[    0.000000] GICv3: GICv3 features: 16 PPIs
+[    0.000000] GICv3: GICD_CTLR.DS=0, SCR_EL3.FIQ=0
+[    0.000000] GICv3: CPU0: found redistributor 0 region 0:0x000000000c080000
+[    0.000000] rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[    0.000000] arch_timer: cp15 timer running at 13.00MHz (phys).
+[    0.000000] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x2ff89eacb, max_idle_ns: 440795202429 ns
+[    0.000000] sched_clock: 56 bits at 13MHz, resolution 76ns, wraps every 4398046511101ns
+[    0.000093] Calibrating delay loop (skipped), value calculated using timer frequency.. 26.00 BogoMIPS (lpj=130000)
+[    0.000102] pid_max: default: 32768 minimum: 301
+[    0.002540] Mount-cache hash table entries: 2048 (order: 2, 16384 bytes, linear)
+[    0.002551] Mountpoint-cache hash table entries: 2048 (order: 2, 16384 bytes, linear)
+[    0.007637] cacheinfo: Unable to detect cache hierarchy for CPU 0
+[    0.008478] rcu: Hierarchical SRCU implementation.
+[    0.008485] rcu:     Max phase no-delay instances is 1000.
+[    0.008683] Timer migration: 1 hierarchy levels; 8 children per group; 1 crossnode level
+[    0.008896] smp: Bringing up secondary CPUs ...
+[    0.009290] Detected VIPT I-cache on CPU1
+[    0.009339] GICv3: CPU1: found redistributor 1 region 0:0x000000000c0a0000
+[    0.009370] CPU1: Booted secondary processor 0x0000000001 [0x410fd034]
+[    0.009452] smp: Brought up 1 node, 2 CPUs
+[    0.009458] SMP: Total of 2 processors activated.
+[    0.009460] CPU: All CPU(s) started at EL2
+[    0.009463] CPU features: detected: 32-bit EL0 Support
+[    0.009467] CPU features: detected: CRC32 instructions
+[    0.009493] alternatives: applying system-wide alternatives
+[    0.009630] CPU features: emulated: Privileged Access Never (PAN) using TTBR0_EL1 switching
+[    0.009763] Memory: 1001892K/1048576K available (9664K kernel code, 946K rwdata, 2976K rodata, 960K init, 295K bss, 43296K reserved, 0K cma-reserved)
+[    0.013167] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.013195] posixtimers hash table entries: 1024 (order: 2, 16384 bytes, linear)
+[    0.013225] futex hash table entries: 512 (32768 bytes on 1 NUMA nodes, total 32 KiB, linear).
+[    0.013264] 29008 pages in range for non-PLT usage
+[    0.013267] 520528 pages in range for PLT usage
+[    0.014854] pinctrl core: initialized pinctrl subsystem
+[    0.016094] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    0.016436] DMA: preallocated 128 KiB GFP_KERNEL pool for atomic allocations
+[    0.016462] DMA: preallocated 128 KiB GFP_KERNEL|GFP_DMA pool for atomic allocations
+[    0.016483] DMA: preallocated 128 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocations
+[    0.016925] thermal_sys: Registered thermal governor 'fair_share'
+[    0.016930] thermal_sys: Registered thermal governor 'bang_bang'
+[    0.016933] thermal_sys: Registered thermal governor 'step_wise'
+[    0.016935] thermal_sys: Registered thermal governor 'user_space'
+[    0.017020] ASID allocator initialised with 65536 entries
+[    0.017673] pstore: Using crash dump compression: deflate
+[    0.017678] pstore: Registered ramoops as persistent store backend
+[    0.017681] ramoops: using 0x10000@0x42ff0000, ecc: 0
+[    0.019332] /soc/interrupt-controller@c000000: Fixed dependency cycle(s) with /soc/interrupt-controller@c000000
+[    0.038967] SCSI subsystem initialized
+[    0.039133] libata version 3.00 loaded.
+[    0.041035] clocksource: Switched to clocksource arch_sys_counter
+[    0.043485] NET: Registered PF_INET protocol family
+[    0.043623] IP idents hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[    0.045169] tcp_listen_portaddr_hash hash table entries: 512 (order: 1, 8192 bytes, linear)
+[    0.045187] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.045203] TCP established hash table entries: 8192 (order: 4, 65536 bytes, linear)
+[    0.045257] TCP bind hash table entries: 8192 (order: 6, 262144 bytes, linear)
+[    0.045447] TCP: Hash tables configured (established 8192 bind 8192)
+[    0.045749] MPTCP token hash table entries: 1024 (order: 3, 24576 bytes, linear)
+[    0.045882] UDP hash table entries: 512 (order: 3, 32768 bytes, linear)
+[    0.045924] UDP-Lite hash table entries: 512 (order: 3, 32768 bytes, linear)
+[    0.046191] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    0.046217] PCI: CLS 0 bytes, default 64
+[    0.046371] Unpacking initramfs...
+[    0.061685] workingset: timestamp_bits=46 max_order=18 bucket_order=0
+[    0.066830] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.066840] jffs2: version 2.2 (NAND) (SUMMARY) (LZMA) (RTIME) (CMODE_PRIORITY) (c) 2001-2006 Red Hat, Inc.
+[    0.070201] cryptd: max_cpu_qlen set to 1000
+[    0.132972] gpio-export gpio-export: 2 gpio(s) exported
+[    0.139331] Serial: 8250/16550 driver, 3 ports, IRQ sharing disabled
+[    0.142321] printk: legacy console [ttyS0] disabled
+[    0.162751] 11002000.serial: ttyS0 at MMIO 0x11002000 (irq = 72, base_baud = 2500000) is a ST16650V2
+[    0.162795] printk: legacy console [ttyS0] enabled
+[    0.896957] Freeing initrd memory: 3048K
+[    0.921133] mtk_rng trng: registered RNG driver
+[    0.941136] random: crng init done
+[    0.970883] loop: module loaded
+[    0.977175] spi-nand spi0.0: calibration result: 0x3
+[    0.982281] spi-nand spi0.0: Winbond SPI NAND was found.
+[    0.987585] spi-nand spi0.0: 256 MiB, block size: 128 KiB, page size: 2048, OOB size: 128
+[    0.996340] Signature found at block 2047 [0x0ffe0000]
+[    1.001499] NMBM management region starts at block 1920 [0x0f000000]
+[    1.009047] First info table with writecount 0 found in block 1920
+[    1.019026] Second info table with writecount 0 found in block 1923
+[    1.025317] NMBM has been successfully attached
+[    1.034058] 9 fixed-partitions partitions found on MTD device spi0.0
+[    1.040420] Creating 9 MTD partitions on "spi0.0":
+[    1.045230] 0x000000000000-0x000000100000 : "BL2"
+[    1.050980] 0x000000100000-0x000000180000 : "u-boot-env"
+[    1.057128] 0x000000180000-0x000000380000 : "Factory"
+[    1.063969] 0x000000380000-0x000000580000 : "FIP"
+[    1.070160] 0x000000580000-0x000000620000 : "woem"
+[    1.075798] 0x000000620000-0x000007620000 : "ubi"
+[    1.135875] 0x000007620000-0x00000e620000 : "ubi2"
+[    1.196142] 0x00000e620000-0x00000e680000 : "wtinfo"
+[    1.201782] 0x00000e680000-0x00000e6e0000 : "nvram"
+[    1.213257] mtk_soc_eth 15100000.ethernet: legacy DT: using hard-coded SRAM offset.
+[    1.221180] mtk_soc_eth 15100000.ethernet: legacy DT: missing interrupt-names.
+[    1.595692] mtk_soc_eth 15100000.ethernet eth0: mediatek frame engine at 0xffffffc081580000, irq 75
+[    1.605609] mtk_soc_eth 15100000.ethernet eth1: mediatek frame engine at 0xffffffc081580000, irq 75
+[    1.615398] i2c_dev: i2c /dev entries driver
+[    1.621678] mtk-wdt 1001c000.watchdog: Watchdog enabled (timeout=31 sec, nowayout=0)
+[    1.630519] NET: Registered PF_INET6 protocol family
+[    1.636602] Segment Routing with IPv6
+[    1.640286] In-situ OAM (IOAM) with IPv6
+[    1.644299] NET: Registered PF_PACKET protocol family
+[    1.649636] 8021q: 802.1Q VLAN Support v1.8
+[    1.672295] phy phy-soc:usb-phy@11e10000.1: type_sw - reg 0x218, index 0
+[    1.680049] UBI: auto-attach mtd5
+[    1.683402] ubi0: default fastmap pool size: 40
+[    1.687923] ubi0: default fastmap WL pool size: 20
+[    1.692739] ubi0: attaching mtd5
+[    2.055668] ubi0: scanning is finished
+[    2.064625] ubi0: attached mtd5 (name "ubi", size 112 MiB)
+[    2.070116] ubi0: PEB size: 131072 bytes (128 KiB), LEB size: 126976 bytes
+[    2.077006] ubi0: min./max. I/O unit sizes: 2048/2048, sub-page size 2048
+[    2.083792] ubi0: VID header offset: 2048 (aligned 2048), data offset: 4096
+[    2.090740] ubi0: good PEBs: 896, bad PEBs: 0, corrupted PEBs: 0
+[    2.096740] ubi0: user volume: 2, internal volumes: 1, max. volumes count: 128
+[    2.103953] ubi0: max/mean erase counter: 6/3, WL threshold: 4096, image sequence number: 609858647
+[    2.112989] ubi0: available PEBs: 468, total reserved PEBs: 428, PEBs reserved for bad PEB handling: 38
+[    2.122378] ubi0: background thread "ubi_bgt0d" started, PID 584
+[    2.122500] clk: Disabling unused clocks
+[    2.132562] PM: genpd: Disabling unused power domains
+[    2.138188] Freeing unused kernel memory: 960K
+[    2.142714] Run /init as init process
+[    2.146366]   with arguments:
+[    2.149321]     /init
+[    2.151617]   with environment:
+[    2.154747]     HOME=/
+[    2.157096]     TERM=linux
+[    2.283128] init: Console is alive
+[    2.286672] init: - watchdog -
+[    2.293796] kmodloader: loading kernel modules from /etc/modules-boot.d/*
+[    2.301157] gpio_button_hotplug: loading out-of-tree module taints kernel.
+[    2.311931] kmodloader: done loading kernel modules from /etc/modules-boot.d/*
+[    2.320492] init: - preinit -
+[    2.434013] mtk_soc_eth 15100000.ethernet wan: renamed from eth0
+[    2.442217] mtk_soc_eth 15100000.ethernet lan: renamed from eth1
+[    2.470962] mtk_soc_eth 15100000.ethernet lan: PHY [mdio-bus:00] driver [MediaTek MT7981 PHY] (irq=POLL)
+[    2.484673] mtk_soc_eth 15100000.ethernet lan: configuring for phy/gmii link mode
+[    2.494127] mtk_soc_eth 15100000.ethernet lan: Link is Up - 1Gbps/Full - flow control rx/tx
+Press the [f] key and hit [enter] to enter failsafe mode
+Press the [1], [2], [3] or [4] key and hit [enter] to select the debug level
+- generating board file -
+Cannot parse config file '/etc/fw_env.config': No such file or directory
+Failed to find NVMEM device
+[    6.962692] mtk_soc_eth 15100000.ethernet lan: Link is Down
+[    6.974353] procd: - early -
+[    6.977295] procd: - watchdog -
+[    7.504570] procd: - watchdog -
+[    7.507877] procd: - ubus -
+[    7.562380] procd: - init -
+Please press Enter to activate this console.
+[    7.737896] kmodloader: loading kernel modules from /etc/modules.d/*
+[    7.754020] crypto-safexcel 10320000.crypto: EIP97:230(0,1,4,4)-HIA:270(0,5,5),PE:150/433(alg:7fcdfc00)/0/0/0
+[    7.809288] PPP generic driver version 2.4.2
+[    7.815185] NET: Registered PF_PPPOX protocol family
+[    7.824898] kmodloader: done loading kernel modules from /etc/modules.d/*
+[    7.968194] urngd: v1.0.2 started.
+[   12.034062] mtk_soc_eth 15100000.ethernet lan: PHY [mdio-bus:00] driver [MediaTek MT7981 PHY] (irq=POLL)
+[   12.048157] mtk_soc_eth 15100000.ethernet lan: configuring for phy/gmii link mode
+[   12.060368] br-lan: port 1(lan) entered blocking state
+[   12.065597] br-lan: port 1(lan) entered disabled state
+[   12.070772] mtk_soc_eth 15100000.ethernet lan: entered allmulticast mode
+[   12.077737] mtk_soc_eth 15100000.ethernet lan: entered promiscuous mode
+[   12.141179] mtk_soc_eth 15100000.ethernet wan: PHY [mdio-bus:06] driver [RTL8221B-VB-CG 2.5Gbps PHY] (irq=53)
+[   12.154177] mtk_soc_eth 15100000.ethernet wan: configuring for phy/2500base-x link mode
+WS1610 transition: running self-contained staging initramfs
+WS1610 transition: validating the vendor layout
+[   13.024364] ubi1: default fastmap pool size: 40
+[   13.028898] ubi1: default fastmap WL pool size: 20
+[   13.033748] ubi1: attaching mtd6
+[   13.448874] ubi1: scanning is finished
+[   13.457238] ubi1 warning: ubi_eba_init: cannot reserve enough PEBs for bad PEB handling, reserved 36, need 38
+[   13.501566] ubi1: attached mtd6 (name "ubi2", size 112 MiB)
+[   13.507154] ubi1: PEB size: 131072 bytes (128 KiB), LEB size: 126976 bytes
+[   13.514069] ubi1: min./max. I/O unit sizes: 2048/2048, sub-page size 2048
+[   13.520855] ubi1: VID header offset: 2048 (aligned 2048), data offset: 4096
+[   13.527821] ubi1: good PEBs: 896, bad PEBs: 0, corrupted PEBs: 0
+[   13.533829] ubi1: user volume: 3, internal volumes: 1, max. volumes count: 128
+[   13.541046] ubi1: max/mean erase counter: 6/2, WL threshold: 4096, image sequence number: 603938363
+[   13.550077] ubi1: available PEBs: 0, total reserved PEBs: 896, PEBs reserved for bad PEB handling: 36
+[   13.559304] ubi1: background thread "ubi_bgt1d" started, PID 2425
+[   13.560045] block ubiblock1_1: created from ubi1:1(rootfs)
+[   13.570899] ubiblock: device ubiblock1_1 (rootfs) set to be root filesystem
+WS1610 transition: selected transition payload in vendor ubi (ubi0)
+WS1610 transition: copying and validating the embedded installer
+[   15.191261] mtk_soc_eth 15100000.ethernet lan: Link is Up - 1Gbps/Full - flow control rx/tx
+[   15.199635] br-lan: port 1(lan) entered blocking state
+[   15.204775] br-lan: port 1(lan) entered forwarding state
+converter.dtb: OK
+converter.its: OK
+final-bl2.bin: OK
+final-fip.bin: OK
+initrd-base.cpio: OK
+kernel.lzma: OK
+recovery.itb: OK
+setup.itb: OK
+WS1610 transition: reading the complete 2 MiB Factory partition into RAM
+Dumping Factory ...
+WS1610 transition: assembling the device-specific conversion initramfs
+20012 blocks
+54688 blocks
+FIT description: Huasifei WS1610 RAM-only UBI converter
+Created:         Thu Jan  1 00:00:35 1970
+ Image 0 (kernel)
+  Description:  OpenWrt conversion kernel
+  Created:      Thu Jan  1 00:00:35 1970
+  Type:         Kernel Image
+  Compression:  lzma compressed
+  Data Size:    4658185 Bytes = 4549.01 KiB = 4.44 MiB
+  Architecture: AArch64
+  OS:           Linux
+  Load Address: 0x50000000
+  Entry Point:  0x50000000
+  Hash algo:    sha256
+  Hash value:   be056a8bb8197d01b421985084d0964d6c02baf66e8443cdd2e28bd4dfbdb8ad
+ Image 1 (ramdisk)
+  Description:  OpenWrt conversion initramfs
+  Created:      Thu Jan  1 00:00:35 1970
+  Type:         RAMDisk Image
+  Compression:  uncompressed
+  Data Size:    29658819 Bytes = 28963.69 KiB = 28.28 MiB
+  Architecture: AArch64
+  OS:           Linux
+  Load Address: 0x58000000
+  Entry Point:  unavailable
+  Hash algo:    sha256
+  Hash value:   704e5e5d15112ae50f66692543d75dbffdfd065ba4fb6227c69ef0472c7dff75
+ Image 2 (fdt)
+  Description:  WS1610 raw NAND conversion device tree
+  Created:      Thu Jan  1 00:00:35 1970
+  Type:         Flat Device Tree
+  Compression:  uncompressed
+  Data Size:    23420 Bytes = 22.87 KiB = 0.02 MiB
+  Architecture: AArch64
+  Load Address: 0x5f000000
+  Hash algo:    sha256
+  Hash value:   6b9588342ef39d64a7a327207866990bf690b2f19e8e096ed661d791b1998eeb
+ Default Configuration: 'config-1'
+ Configuration 0 (config-1)
+  Description:  Automatic WS1610 all-in-UBI conversion
+  Kernel:       kernel
+  Init Ramdisk: ramdisk
+  FDT:          fdt
+Signature check OK
+WS1610 transition: all inputs verified; replacing the vendor kernel volume
+Volume ID 0, size 271 LEBs (34410496 bytes, 32.8 MiB), LEB size 126976 bytes (124.0 KiB), static, name "kernel", alignment 1
+WS1610 transition: conversion FIT verified in UBI; rebooting into the RAM-only converter
+[   57.704317] reboot: Restarting system
+
+F0: 102B 0000
+FA: 1040 0000
+FA: 1040 0000 [0200]
+F9: 0000 0000
+V0: 0000 0000 [0001]
+00: 0000 0000
+BP: 2400 0041 [0000]
+G0: 1190 0000
+EC: 0000 0000 [1000]
+T0: 0000 024B [010F]
+Jump to BL
+
+NOTICE:  BL2: v2.7(release):dd71bc3c
+NOTICE:  BL2: Built : 11:43:41, Jun 30 2024
+NOTICE:  WDT: disabled
+NOTICE:  EMI: Using DDR4 settings
+
+dump toprgu registers data:
+1001c000 | 00000000 0000ffe0 00000000 00000000
+1001c010 | 00000fff 00000000 00f00000 00000000
+1001c020 | 00000000 00000000 00000000 00000000
+1001c030 | 003c0003 003c0003 00000000 00000000
+1001c040 | 00000000 00000000 00000000 00000000
+1001c050 | 00000000 00000000 00000000 00000000
+1001c060 | 00000000 00000000 00000000 00000000
+1001c070 | 00000000 00000000 00000000 00000000
+1001c080 | 00000000 00000000 00000000 00000000
+
+dump drm registers data:
+1001d000 | 00000000 00000000 00000000 00000000
+1001d010 | 00000000 00000000 00000000 00000000
+1001d020 | 00000000 00000000 00000000 00000000
+1001d030 | 00a003f1 000000ff 00100000 00000000
+1001d040 | 00027e71 000200a0 00020303 000000ff
+1001d050 | 00000000 00000000 00000000 00000000
+1001d060 | 00000002 00000000 00000000 00000000
+drm: 500 = 0xc
+[DDR Reserve] ddr reserve mode not be enabled yet
+DDR RESERVE Success 0
+[EMI] ComboMCP not ready, using default setting
+BYTE_swap:0
+BYTE_swap:0
+Window Sum 568, worse bit 1, min window 64
+Window Sum 536, worse bit 8, min window 64
+[TxChooseVref] Worse bit 10, Min win 25, Win sum 427, Final Vref 40
+Window Sum 224, worse bit 3, min window 20
+Window Sum 174, worse bit 11, min window 6
+Window Sum 262, worse bit 1, min window 28
+Window Sum 222, worse bit 11, min window 14
+Window Sum 298, worse bit 1, min window 34
+Window Sum 276, worse bit 11, min window 28
+Window Sum 306, worse bit 1, min window 34
+Window Sum 290, worse bit 10, min window 34
+Window Sum 336, worse bit 1, min window 38
+Window Sum 310, worse bit 10, min window 36
+Window Sum 346, worse bit 1, min window 40
+Window Sum 334, worse bit 8, min window 40
+Window Sum 366, worse bit 1, min window 42
+Window Sum 344, worse bit 8, min window 42
+Window Sum 376, worse bit 3, min window 44
+Window Sum 364, worse bit 9, min window 44
+Window Sum 392, worse bit 1, min window 46
+Window Sum 372, worse bit 10, min window 44
+Window Sum 398, worse bit 1, min window 48
+Window Sum 388, worse bit 10, min window 46
+Window Sum 412, worse bit 1, min window 48
+Window Sum 404, worse bit 11, min window 48
+Window Sum 418, worse bit 1, min window 50
+Window Sum 418, worse bit 10, min window 50
+Window Sum 432, worse bit 1, min window 50
+Window Sum 426, worse bit 11, min window 50
+Window Sum 442, worse bit 1, min window 54
+Window Sum 432, worse bit 10, min window 52
+Window Sum 452, worse bit 1, min window 54
+Window Sum 446, worse bit 10, min window 54
+Window Sum 458, worse bit 1, min window 56
+Window Sum 454, worse bit 10, min window 54
+Window Sum 464, worse bit 1, min window 56
+Window Sum 456, worse bit 10, min window 54
+Window Sum 478, worse bit 1, min window 58
+Window Sum 468, worse bit 12, min window 56
+Window Sum 486, worse bit 3, min window 58
+Window Sum 470, worse bit 11, min window 56
+NOTICE:  EMI: Detected DRAM size: 1024MB
+NOTICE:  EMI: complex R/W mem test passed
+NOTICE:  CPU: MT7981 (1300MHz)
+NOTICE:  SPI_NAND parses attributes from parameter page.
+NOTICE:  SPI_NAND Detected ID 0xef
+NOTICE:  Page size 2048, Block size 131072, size 268435456
+NOTICE:  Initializing NMBM ...
+NOTICE:  Signature found at block 2047 [0x0ffe0000]
+Reading from 0x0 to 0x7ffd44f8, size 0x10000 ... OK
+boot from ubi
+ubi0: attaching mtd7
+ubi0: scanning is finished
+ubi0: attached mtd7 (name "ubi", size 112 MiB)
+ubi0: PEB size: 131072 bytes (128 KiB), LEB size: 126976 bytes
+ubi0: min./max. I/O unit sizes: 2048/2048, sub-page size 2048
+ubi0: VID header offset: 2048 (aligned 2048), data offset: 4096
+ubi0: good PEBs: 896, bad PEBs: 0, corrupted PEBs: 0
+ubi0: user volume: 1, internal volumes: 1, max. volumes count: 128
+ubi0: max/mean erase counter: 7/4, WL threshold: 4096, image sequence number: 609858647
+ubi0: available PEBs: 583, total reserved PEBs: 313, PEBs reserved for bad PEB handling: 38
+Reading from volume 'kernel' to 0x46000000, size 0x0 ... OK
+## Loading kernel from FIT Image at 46000000 ...
+   Using 'config-1' configuration
+   Trying 'kernel' kernel subimage
+     Description:  OpenWrt conversion kernel
+     Type:         Kernel Image
+     Compression:  lzma compressed
+     Data Start:   0x460000e0
+     Data Size:    4658185 Bytes = 4.4 MiB
+     Architecture: AArch64
+     OS:           Linux
+     Load Address: 0x50000000
+     Entry Point:  0x50000000
+     Hash algo:    sha256
+     Hash value:   be056a8bb8197d01b421985084d0964d6c02baf66e8443cdd2e28bd4dfbdb8ad
+   Verifying Hash Integrity ... sha256+ OK
+## Loading ramdisk from FIT Image at 46000000 ...
+   Using 'config-1' configuration
+   Trying 'ramdisk' ramdisk subimage
+     Description:  OpenWrt conversion initramfs
+     Type:         RAMDisk Image
+     Compression:  uncompressed
+     Data Start:   0x464715f4
+     Data Size:    29658819 Bytes = 28.3 MiB
+     Architecture: AArch64
+     OS:           Linux
+     Load Address: 0x58000000
+     Entry Point:  unavailable
+     Hash algo:    sha256
+     Hash value:   704e5e5d15112ae50f66692543d75dbffdfd065ba4fb6227c69ef0472c7dff75
+   Verifying Hash Integrity ... sha256+ OK
+   Loading ramdisk from 0x464715f4 to 0x58000000
+## Loading fdt from FIT Image at 46000000 ...
+   Using 'config-1' configuration
+   Trying 'fdt' fdt subimage
+     Description:  WS1610 raw NAND conversion device tree
+     Type:         Flat Device Tree
+     Compression:  uncompressed
+     Data Start:   0x480ba5b4
+     Data Size:    23420 Bytes = 22.9 KiB
+     Architecture: AArch64
+     Load Address: 0x5f000000
+     Hash algo:    sha256
+     Hash value:   6b9588342ef39d64a7a327207866990bf690b2f19e8e096ed661d791b1998eeb
+   Verifying Hash Integrity ... sha256+ OK
+   Loading fdt from 0x480ba5b4 to 0x5f000000
+   Booting using the fdt blob at 0x5f000000
+   Uncompressing Kernel Image
+   Loading Ramdisk to 7dbb0000, end 7f7f8ec3 ... OK
+   Loading Device Tree to 000000007dba7000, end 000000007dbafb7b ... OK
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0000000000 [0x410fd034]
+[    0.000000] Linux version 6.18.38 (georg@Precision-5680) (aarch64-openwrt-linux-musl-gcc (OpenWrt GCC 14.4.0 r35339-2de8f7da21) 14.4.0, GNU ld (GNU Binutils) 2.46.1) #0 SMP Mon Jul 20 18:01:23 2026
+[    0.000000] KASLR disabled due to lack of seed
+[    0.000000] Machine model: Huasifei WS1610 (RAM-only UBI converter)
+[    0.000000] OF: reserved mem: 0x0000000042ff0000..0x0000000042ffffff (64 KiB) map non-reusable ramoops@42ff0000
+[    0.000000] OF: reserved mem: 0x0000000043000000..0x000000004302ffff (192 KiB) nomap non-reusable secmon@43000000
+[    0.000000] OF: reserved mem: 0x0000000047c80000..0x0000000047d7ffff (1024 KiB) nomap non-reusable wmcpu-reserved@47c80000
+[    0.000000] OF: reserved mem: 0x0000000047d80000..0x0000000047dbffff (256 KiB) nomap non-reusable wo-emi@47d80000
+[    0.000000] OF: reserved mem: 0x0000000047dc0000..0x0000000047ffffff (2304 KiB) nomap non-reusable wo-data@47dc0000
+[    0.000000] Zone ranges:
+[    0.000000]   DMA      [mem 0x0000000040000000-0x000000007fffffff]
+[    0.000000]   DMA32    empty
+[    0.000000]   Normal   empty
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x0000000040000000-0x0000000042ffffff]
+[    0.000000]   node   0: [mem 0x0000000043000000-0x000000004302ffff]
+[    0.000000]   node   0: [mem 0x0000000043030000-0x0000000047c7ffff]
+[    0.000000]   node   0: [mem 0x0000000047c80000-0x0000000047ffffff]
+[    0.000000]   node   0: [mem 0x0000000048000000-0x000000007fffffff]
+[    0.000000] Initmem setup node 0 [mem 0x0000000040000000-0x000000007fffffff]
+[    0.000000] psci: probing for conduit method from DT.
+[    0.000000] psci: PSCIv1.1 detected in firmware.
+[    0.000000] psci: Using standard PSCI v0.2 function IDs
+[    0.000000] psci: MIGRATE_INFO_TYPE not supported.
+[    0.000000] psci: SMC Calling Convention v1.2
+[    0.000000] percpu: Embedded 20 pages/cpu s43480 r8192 d30248 u81920
+[    0.000000] pcpu-alloc: s43480 r8192 d30248 u81920 alloc=20*4096
+[    0.000000] pcpu-alloc: [0] 0 [0] 1
+[    0.000000] Detected VIPT I-cache on CPU0
+[    0.000000] CPU features: detected: GICv3 CPU interface
+[    0.000000] CPU features: kernel page table isolation disabled by kernel configuration
+[    0.000000] alternatives: applying boot alternatives
+[    0.000000] Kernel command line: console=ttyS0,115200 root=/dev/ram0 panic=-1
+[    0.000000] printk: log buffer data + meta data: 131072 + 458752 = 589824 bytes
+[    0.000000] Dentry cache hash table entries: 131072 (order: 8, 1048576 bytes, linear)
+[    0.000000] Inode-cache hash table entries: 65536 (order: 7, 524288 bytes, linear)
+[    0.000000] software IO TLB: SWIOTLB bounce buffer size adjusted to 1MB
+[    0.000000] software IO TLB: area num 2.
+[    0.000000] software IO TLB: mapped [mem 0x000000007fb2b000-0x000000007fc2b000] (1MB)
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 262144
+[    0.000000] mem auto-init: stack:off, heap alloc:off, heap free:off
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=2, Nodes=1
+[    0.000000] rcu: Hierarchical RCU implementation.
+[    0.000000] rcu:     RCU restricting CPUs from NR_CPUS=4 to nr_cpu_ids=2.
+[    0.000000]  Tracing variant of Tasks RCU enabled.
+[    0.000000] rcu: RCU calculated value of scheduler-enlistment delay is 10 jiffies.
+[    0.000000] rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=2
+[    0.000000] RCU Tasks Trace: Setting shift to 1 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=2.
+[    0.000000] NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
+[    0.000000] GICv3: GIC: Using split EOI/Deactivate mode
+[    0.000000] GICv3: 640 SPIs implemented
+[    0.000000] GICv3: 0 Extended SPIs implemented
+[    0.000000] Root IRQ handler: gic_handle_irq
+[    0.000000] GICv3: GICv3 features: 16 PPIs
+[    0.000000] GICv3: GICD_CTLR.DS=0, SCR_EL3.FIQ=0
+[    0.000000] GICv3: CPU0: found redistributor 0 region 0:0x000000000c080000
+[    0.000000] rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[    0.000000] arch_timer: cp15 timer running at 13.00MHz (phys).
+[    0.000000] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x2ff89eacb, max_idle_ns: 440795202429 ns
+[    0.000000] sched_clock: 56 bits at 13MHz, resolution 76ns, wraps every 4398046511101ns
+[    0.000091] Calibrating delay loop (skipped), value calculated using timer frequency.. 26.00 BogoMIPS (lpj=130000)
+[    0.000100] pid_max: default: 32768 minimum: 301
+[    0.002540] Mount-cache hash table entries: 2048 (order: 2, 16384 bytes, linear)
+[    0.002551] Mountpoint-cache hash table entries: 2048 (order: 2, 16384 bytes, linear)
+[    0.007640] cacheinfo: Unable to detect cache hierarchy for CPU 0
+[    0.008482] rcu: Hierarchical SRCU implementation.
+[    0.008489] rcu:     Max phase no-delay instances is 1000.
+[    0.008687] Timer migration: 1 hierarchy levels; 8 children per group; 1 crossnode level
+[    0.008905] smp: Bringing up secondary CPUs ...
+[    0.009295] Detected VIPT I-cache on CPU1
+[    0.009346] GICv3: CPU1: found redistributor 1 region 0:0x000000000c0a0000
+[    0.009376] CPU1: Booted secondary processor 0x0000000001 [0x410fd034]
+[    0.009458] smp: Brought up 1 node, 2 CPUs
+[    0.009463] SMP: Total of 2 processors activated.
+[    0.009466] CPU: All CPU(s) started at EL2
+[    0.009469] CPU features: detected: 32-bit EL0 Support
+[    0.009473] CPU features: detected: CRC32 instructions
+[    0.009499] alternatives: applying system-wide alternatives
+[    0.009636] CPU features: emulated: Privileged Access Never (PAN) using TTBR0_EL1 switching
+[    0.009773] Memory: 975980K/1048576K available (9664K kernel code, 946K rwdata, 2976K rodata, 960K init, 295K bss, 69208K reserved, 0K cma-reserved)
+[    0.013160] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.013188] posixtimers hash table entries: 1024 (order: 2, 16384 bytes, linear)
+[    0.013217] futex hash table entries: 512 (32768 bytes on 1 NUMA nodes, total 32 KiB, linear).
+[    0.013255] 29008 pages in range for non-PLT usage
+[    0.013258] 520528 pages in range for PLT usage
+[    0.014845] pinctrl core: initialized pinctrl subsystem
+[    0.016090] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    0.016425] DMA: preallocated 128 KiB GFP_KERNEL pool for atomic allocations
+[    0.016452] DMA: preallocated 128 KiB GFP_KERNEL|GFP_DMA pool for atomic allocations
+[    0.016472] DMA: preallocated 128 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocations
+[    0.016914] thermal_sys: Registered thermal governor 'fair_share'
+[    0.016917] thermal_sys: Registered thermal governor 'bang_bang'
+[    0.016920] thermal_sys: Registered thermal governor 'step_wise'
+[    0.016923] thermal_sys: Registered thermal governor 'user_space'
+[    0.017006] ASID allocator initialised with 65536 entries
+[    0.017667] pstore: Using crash dump compression: deflate
+[    0.017672] pstore: Registered ramoops as persistent store backend
+[    0.017675] ramoops: using 0x10000@0x42ff0000, ecc: 0
+[    0.018755] /soc/interrupt-controller@c000000: Fixed dependency cycle(s) with /soc/interrupt-controller@c000000
+[    0.037039] SCSI subsystem initialized
+[    0.037216] libata version 3.00 loaded.
+[    0.038911] clocksource: Switched to clocksource arch_sys_counter
+[    0.041407] NET: Registered PF_INET protocol family
+[    0.041541] IP idents hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[    0.043086] tcp_listen_portaddr_hash hash table entries: 512 (order: 1, 8192 bytes, linear)
+[    0.043103] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.043117] TCP established hash table entries: 8192 (order: 4, 65536 bytes, linear)
+[    0.043172] TCP bind hash table entries: 8192 (order: 6, 262144 bytes, linear)
+[    0.043358] TCP: Hash tables configured (established 8192 bind 8192)
+[    0.043647] MPTCP token hash table entries: 1024 (order: 3, 24576 bytes, linear)
+[    0.043779] UDP hash table entries: 512 (order: 3, 32768 bytes, linear)
+[    0.043815] UDP-Lite hash table entries: 512 (order: 3, 32768 bytes, linear)
+[    0.044070] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    0.044096] PCI: CLS 0 bytes, default 64
+[    0.044248] Unpacking initramfs...
+[    0.050305] workingset: timestamp_bits=46 max_order=18 bucket_order=0
+[    0.055595] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.055606] jffs2: version 2.2 (NAND) (SUMMARY) (LZMA) (RTIME) (CMODE_PRIORITY) (c) 2001-2006 Red Hat, Inc.
+[    0.058771] cryptd: max_cpu_qlen set to 1000
+[    0.120585] gpio-export gpio-export: 2 gpio(s) exported
+[    0.126408] Serial: 8250/16550 driver, 3 ports, IRQ sharing disabled
+[    0.129736] printk: legacy console [ttyS0] disabled
+[    0.150155] 11002000.serial: ttyS0 at MMIO 0x11002000 (irq = 72, base_baud = 2500000) is a ST16650V2
+[    0.150201] printk: legacy console [ttyS0] enabled
+[    0.303390] Freeing initrd memory: 28960K
+[    0.313918] mtk_rng trng: registered RNG driver
+[    0.320572] random: crng init done
+[    0.957324] loop: module loaded
+[    0.963612] spi-nand spi0.0: calibration result: 0x3
+[    0.968689] spi-nand spi0.0: Winbond SPI NAND was found.
+[    0.974030] spi-nand spi0.0: 256 MiB, block size: 128 KiB, page size: 2048, OOB size: 128
+[    0.986825] 2 fixed-partitions partitions found on MTD device spi0.0
+[    0.993207] Creating 2 MTD partitions on "spi0.0":
+[    0.997990] 0x000000000000-0x000000100000 : "bl2"
+[    1.003714] 0x000000100000-0x000010000000 : "ubi-convert"
+[    1.138384] i2c_dev: i2c /dev entries driver
+[    1.145234] NET: Registered PF_INET6 protocol family
+[    1.150965] Segment Routing with IPv6
+[    1.154650] In-situ OAM (IOAM) with IPv6
+[    1.158612] NET: Registered PF_PACKET protocol family
+[    1.163834] 8021q: 802.1Q VLAN Support v1.8
+[    1.186811] clk: Disabling unused clocks
+[    1.191165] PM: genpd: Disabling unused power domains
+[    1.197371] Freeing unused kernel memory: 960K
+[    1.202029] Run /init as init process
+[    1.205685]   with arguments:
+[    1.208640]     /init
+[    1.210931]   with environment:
+[    1.214065]     HOME=/
+[    1.216414]     TERM=linux
+[    1.390360] init: Console is alive
+[    1.397691] kmodloader: loading kernel modules from /etc/modules-boot.d/*
+[    1.405135] gpio_button_hotplug: loading out-of-tree module taints kernel.
+[    1.415971] kmodloader: done loading kernel modules from /etc/modules-boot.d/*
+[    1.424560] init: - preinit -
+ip: SIOCGIFFLAGS: No such device
+Press the [f] key and hit [enter] to enter failsafe mode
+Press the [1], [2], [3] or [4] key and hit [enter] to select the debug level
+- generating board file -
+Cannot parse config file '/etc/fw_env.config': No such file or directory
+Failed to find NVMEM device
+[    6.020735] procd: - early -
+[    6.539656] procd: - ubus -
+[    6.594182] procd: - init -
+Please press Enter to activate this console.
+[    6.768806] kmodloader: loading kernel modules from /etc/modules.d/*
+[    6.784890] crypto-safexcel 10320000.crypto: EIP97:230(0,1,4,4)-HIA:270(0,5,5),PE:150/433(alg:7fcdfc00)/0/0/0
+[    6.845967] PPP generic driver version 2.4.2
+[    6.851806] NET: Registered PF_PPPOX protocol family
+[    6.861528] kmodloader: done loading kernel modules from /etc/modules.d/*
+[    6.993559] urngd: v1.0.2 started.
+WS1610 transition: running RAM-only conversion preflight
+Factory.bin: OK
+final-bl2.bin: OK
+final-fip.bin: OK
+recovery.itb: OK
+setup.itb: OK
+Signature check OK
+Signature check OK
+WS1610 transition: all required data is in RAM and verified
+WS1610 transition: destructive conversion started; do not remove power
+ubiformat: mtd1 (nand), size 267386880 bytes (255.0 MiB), 2040 eraseblocks of 131072 bytes (128.0 KiB), min. I/O size 2048 bytes
+libscan: scanning eraseblock 2039 -- 100 % complete
+ubiformat: 1865 eraseblocks have valid erase counter, mean value is 3
+ubiformat: 158 eraseblocks are supposedly empty
+ubiformat: warning!: 17 of 2040 eraseblocks contain non-UBI data
+ubiformat: warning!: only 1865 of 2040 eraseblocks have valid erase counter
+ubiformat: mean erase counter 3 will be used for the rest of eraseblock
+ubiformat: use erase counter 3 for all eraseblocks
+ubiformat: formatting eraseblock 2020 -- 99 % [   31.035611] ubi0: default fastmap pool size: 100
+ubifo[   31.040416] ubi0: default fastmap WL pool size: 50
+rmat: formatting[   31.046542] ubi0: attaching mtd1
+ubiformat: formatting eraseblock 2039 -- 100 % complete
+[   31.811587] ubi0: scanning is finished
+[   31.821717] ubi0: attached mtd1 (name "ubi-convert", size 255 MiB)
+[   31.827907] ubi0: PEB size: 131072 bytes (128 KiB), LEB size: 126976 bytes
+[   31.834793] ubi0: min./max. I/O unit sizes: 2048/2048, sub-page size 2048
+[   31.841578] ubi0: VID header offset: 2048 (aligned 2048), data offset: 4096
+[   31.848526] ubi0: good PEBs: 2040, bad PEBs: 0, corrupted PEBs: 0
+[   31.854613] ubi0: user volume: 0, internal volumes: 1, max. volumes count: 128
+[   31.861830] ubi0: max/mean erase counter: 3/3, WL threshold: 4096, image sequence number: 2098228044
+[   31.870954] ubi0: available PEBs: 1994, total reserved PEBs: 46, PEBs reserved for bad PEB handling: 40
+[   31.880351] ubi0: background thread "ubi_bgt0d" started, PID 2073
+UBI device number 0, total 2040 LEBs (259031040 bytes, 247.0 MiB), available 1994 LEBs (253190144 bytes, 241.4 MiB), LEB size 126976 bytes (124.0 KiB)
+Volume ID 0, size 1 LEBs (126976 bytes, 124.0 KiB), LEB size 126976 bytes (124.0 KiB), static, name "factory", alignment 1
+WS1610 transition: factory volume verified
+Volume ID 1, size 7 LEBs (888832 bytes, 868.0 KiB), LEB size 126976 bytes (124.0 KiB), static, name "fip", alignment 1
+WS1610 transition: fip volume verified
+[   32.496711] u-boot-env-layout 1100a000.spi:flash@0:partitions:partition@100000:volumes:ubi-volume-ubootenv:nvmem-layout: Invalid calculated CRC32: 0x3683cdbf (expected: 0xffffffff)
+[   32.512834] u-boot-env-layout 1100a000.spi:flash@0:partitions:partition@100000:volumes:ubi-volume-ubootenv:nvmem-layout: probe with driver u-boot-env-layout failed with error -22
+Volume ID 2, size 1 LEBs (126976 bytes, 124.0 KiB), LEB size 126976 bytes (124.0 KiB), dynamic, name "ubootenv", alignment 1
+[   32.547886] u-boot-env-layout 1100a000.spi:flash@0:partitions:partition@100000:volumes:ubi-volume-ubootenv2:nvmem-layout: Invalid calculated CRC32: 0x3683cdbf (expected: 0xffffffff)
+[   32.564096] u-boot-env-layout 1100a000.spi:flash@0:partitions:partition@100000:volumes:ubi-volume-ubootenv2:nvmem-layout: probe with driver u-boot-env-layout failed with error -22
+Volume ID 3, size 1 LEBs (126976 bytes, 124.0 KiB), LEB size 126976 bytes (124.0 KiB), dynamic, name "ubootenv2", alignment 1
+WS1610 transition: empty redundant environment volumes created
+Volume ID 4, size 91 LEBs (11554816 bytes, 11.0 MiB), LEB size 126976 bytes (124.0 KiB), dynamic, name "recovery", alignment 1
+WS1610 transition: recovery volume verified
+[   37.985578] block ubiblock0_5: created from ubi0:5(fit)
+Volume ID 5, size 106 LEBs (13459456 bytes, 12.8 MiB), LEB size 126976 bytes (124.0 KiB), dynamic, name "fit", alignment 1
+WS1610 transition: fit volume verified
+WS1610 transition: all UBI volumes verified; writing final BL2 last
+Unlocking bl2 ...
+Erasing bl2 ...
+Unlocking bl2 ...
+
+Writing from /usr/share/ws1610-converter/final-bl2.bin to bl2 ...
+Dumping bl2 ...
+WS1610 transition: conversion complete; all volumes and BL2 verified
+[   48.946118] reboot: Restarting system
+
+F0: 102B 0000
+FA: 1040 0000
+FA: 1040 0000 [0200]
+F9: 0000 0000
+V0: 0000 0000 [0001]
+00: 0000 0000
+BP: 2400 0041 [0000]
+G0: 1190 0000
+EC: 0000 0000 [1000]
+T0: 0000 01D1 [010F]
+Jump to BL
+
+NOTICE:  BL2: v2.14.0(release):OpenWrt v2026.01.23~e06f2586-1 (mt7981-spim-nand-ubi-ddr4)
+NOTICE:  BL2: Built : 13:37:43, Jul 20 2026
+NOTICE:  WDT: [40000000] Software reset (reboot)
+NOTICE:  EMI: Using DDR4 settings
+NOTICE:  EMI: complex R/W mem test passed
+NOTICE:  DRAM: 1024MB
+NOTICE:  CPU: MT7981 (1300MHz)
+NOTICE:  SPI-NAND probed by parameter page
+NOTICE:  SPI-NAND: WINBOND W25N02KV (256MB)
+NOTICE:  SPI-NAND: Page size: 2KB+128, Block size: 128KB
+NOTICE:  UBI: scanning [0x100000 - 0x10000000] ...
+NOTICE:  UBI: scanning is finished
+NOTICE:  UBI: PEB size: 131072 bytes (128 KiB), LEB size: 126976 bytes
+NOTICE:  UBI: VID header offset: 2048 (aligned 2048), data offset: 4096
+NOTICE:  UBI: Volume fip (Id #1) size is 848828 bytes
+NOTICE:  BL2: Booting BL31
+NOTICE:  BL31: v2.14.0(release):OpenWrt v2026.01.23~e06f2586-1 (mt7981-spim-nand-ubi-ddr4)
+NOTICE:  BL31: Built : 13:37:43, Jul 20 2026
+off
+No size specified -> Using max size (13459456)
+Read 13459456 bytes from volume fit to 0000000046000000
+
+## Checking Image at 46000000 ...
+   FIT image found
+   FIT description: ARM64 OpenWrt FIT (Flattened Image Tree)
+    Image 0 (kernel-1)
+     Description:  ARM64 OpenWrt Linux-6.18.38
+     Type:         Kernel Image
+     Compression:  gzip compressed
+     Data Start:   0x46001000
+     Data Size:    6140506 Bytes = 5.9 MiB
+     Architecture: AArch64
+     OS:           Linux
+     Load Address: 0x48000000
+     Entry Point:  0x48000000
+     Hash algo:    crc32
+     Hash value:   e2c0a260
+     Hash algo:    sha1
+     Hash value:   5ee27832187b86271e81420d772669ed745abc7f
+    Image 1 (fdt-1)
+     Description:  ARM64 OpenWrt huasifei_ws1610-ubi device tree blob
+     Type:         Flat Device Tree
+     Compression:  uncompressed
+     Data Start:   0x465dd000
+     Data Size:    23423 Bytes = 22.9 KiB
+     Architecture: AArch64
+     Hash algo:    crc32
+     Hash value:   d9ce6e93
+     Hash algo:    sha1
+     Hash value:   563f5c81a1eec38b0c705d029cbaa4c1c85fc3f9
+    Image 2 (rootfs-1)
+     Description:  ARM64 OpenWrt huasifei_ws1610-ubi rootfs
+     Type:         Filesystem Image
+     Compression:  uncompressed
+     Data Start:   0x465e3000
+     Data Size:    7241728 Bytes = 6.9 MiB
+     Hash algo:    crc32
+     Hash value:   314bb98e
+     Hash algo:    sha1
+     Hash value:   f1d6e7a85e570ae303bdd0ff6cce8b7f5f79a64a
+    Default Configuration: 'config-1'
+    Configuration 0 (config-1)
+     Description:  OpenWrt huasifei_ws1610-ubi
+     Kernel:       kernel-1
+     FDT:          fdt-1
+     Loadables:    rootfs-1
+## Checking hash(es) for FIT Image at 46000000 ...
+   Hash(es) for Image 0 (kernel-1): crc32+ sha1+
+   Hash(es) for Image 1 (fdt-1): crc32+ sha1+
+   Hash(es) for Image 2 (rootfs-1): crc32+ sha1+
+No size specified -> Using max size (226906112)
+Creating dynamic volume rootfs_data of size 226906112
+## Loading kernel (any) from FIT Image at 46000000 ...
+   Using 'config-1' configuration
+   Trying 'kernel-1' kernel subimage
+     Description:  ARM64 OpenWrt Linux-6.18.38
+     Type:         Kernel Image
+     Compression:  gzip compressed
+     Data Start:   0x46001000
+     Data Size:    6140506 Bytes = 5.9 MiB
+     Architecture: AArch64
+     OS:           Linux
+     Load Address: 0x48000000
+     Entry Point:  0x48000000
+     Hash algo:    crc32
+     Hash value:   e2c0a260
+     Hash algo:    sha1
+     Hash value:   5ee27832187b86271e81420d772669ed745abc7f
+   Verifying Hash Integrity ... crc32+ sha1+ OK
+## Loading fdt (any) from FIT Image at 46000000 ...
+   Using 'config-1' configuration
+   Trying 'fdt-1' fdt subimage
+     Description:  ARM64 OpenWrt huasifei_ws1610-ubi device tree blob
+     Type:         Flat Device Tree
+     Compression:  uncompressed
+     Data Start:   0x465dd000
+     Data Size:    23423 Bytes = 22.9 KiB
+     Architecture: AArch64
+     Hash algo:    crc32
+     Hash value:   d9ce6e93
+     Hash algo:    sha1
+     Hash value:   563f5c81a1eec38b0c705d029cbaa4c1c85fc3f9
+   Verifying Hash Integrity ... crc32+ sha1+ OK
+   Booting using the fdt blob at 0x465dd000
+Working FDT set to 465dd000
+## Loading loadables (any) from FIT Image at 46000000 ...
+   Trying 'rootfs-1' loadables subimage
+     Description:  ARM64 OpenWrt huasifei_ws1610-ubi rootfs
+     Type:         Filesystem Image
+     Compression:  uncompressed
+     Data Start:   0x465e3000
+     Data Size:    7241728 Bytes = 6.9 MiB
+     Hash algo:    crc32
+     Hash value:   314bb98e
+     Hash algo:    sha1
+     Hash value:   f1d6e7a85e570ae303bdd0ff6cce8b7f5f79a64a
+   Verifying Hash Integrity ... crc32+ sha1+ OK
+   Uncompressing Kernel Image to 48000000
+   Loading Device Tree to 000000007e7f7000, end 000000007e7ffb7e ... OK
+Working FDT set to 7e7f7000
+Add 'ramoops@42ff0000' node failed: FDT_ERR_EXISTS
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0000000000 [0x410fd034]
+[    0.000000] Linux version 6.18.38 (georg@Precision-5680) (aarch64-openwrt-linux-musl-gcc (OpenWrt GCC 14.4.0 r35339-2de8f7da21) 14.4.0, GNU ld (GNU Binutils) 2.46.1) #0 SMP Mon Jul 20 18:01:23 2026
+[    0.000000] KASLR enabled
+[    0.000000] Machine model: Huasifei WS1610 (OpenWrt U-Boot UBI layout)
+[    0.000000] OF: reserved mem: 0x0000000042ff0000..0x0000000042ffffff (64 KiB) map non-reusable ramoops@42ff0000
+[    0.000000] OF: reserved mem: 0x0000000043000000..0x000000004302ffff (192 KiB) nomap non-reusable secmon@43000000
+[    0.000000] OF: reserved mem: 0x0000000047c80000..0x0000000047d7ffff (1024 KiB) nomap non-reusable wmcpu-reserved@47c80000
+[    0.000000] OF: reserved mem: 0x0000000047d80000..0x0000000047dbffff (256 KiB) nomap non-reusable wo-emi@47d80000
+[    0.000000] OF: reserved mem: 0x0000000047dc0000..0x0000000047ffffff (2304 KiB) nomap non-reusable wo-data@47dc0000
+[    0.000000] Zone ranges:
+[    0.000000]   DMA      [mem 0x0000000040000000-0x000000007fffffff]
+[    0.000000]   DMA32    empty
+[    0.000000]   Normal   empty
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x0000000040000000-0x0000000042ffffff]
+[    0.000000]   node   0: [mem 0x0000000043000000-0x000000004302ffff]
+[    0.000000]   node   0: [mem 0x0000000043030000-0x0000000047c7ffff]
+[    0.000000]   node   0: [mem 0x0000000047c80000-0x0000000047ffffff]
+[    0.000000]   node   0: [mem 0x0000000048000000-0x000000007fffffff]
+[    0.000000] Initmem setup node 0 [mem 0x0000000040000000-0x000000007fffffff]
+[    0.000000] psci: probing for conduit method from DT.
+[    0.000000] psci: PSCIv1.1 detected in firmware.
+[    0.000000] psci: Using standard PSCI v0.2 function IDs
+[    0.000000] psci: MIGRATE_INFO_TYPE not supported.
+[    0.000000] psci: SMC Calling Convention v1.5
+[    0.000000] percpu: Embedded 20 pages/cpu s43416 r8192 d30312 u81920
+[    0.000000] pcpu-alloc: s43416 r8192 d30312 u81920 alloc=20*4096
+[    0.000000] pcpu-alloc: [0] 0 [0] 1
+[    0.000000] Detected VIPT I-cache on CPU0
+[    0.000000] CPU features: detected: GICv3 CPU interface
+[    0.000000] CPU features: kernel page table isolation disabled by kernel configuration
+[    0.000000] alternatives: applying boot alternatives
+[    0.000000] Kernel command line: root=/dev/fit0 rootwait
+[    0.000000] printk: log buffer data + meta data: 131072 + 458752 = 589824 bytes
+[    0.000000] Dentry cache hash table entries: 131072 (order: 8, 1048576 bytes, linear)
+[    0.000000] Inode-cache hash table entries: 65536 (order: 7, 524288 bytes, linear)
+[    0.000000] software IO TLB: SWIOTLB bounce buffer size adjusted to 1MB
+[    0.000000] software IO TLB: area num 2.
+[    0.000000] software IO TLB: mapped [mem 0x000000007eb00000-0x000000007ec00000] (1MB)
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 262144
+[    0.000000] mem auto-init: stack:off, heap alloc:off, heap free:off
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=2, Nodes=1
+[    0.000000] rcu: Hierarchical RCU implementation.
+[    0.000000] rcu:     RCU restricting CPUs from NR_CPUS=4 to nr_cpu_ids=2.
+[    0.000000]  Tracing variant of Tasks RCU enabled.
+[    0.000000] rcu: RCU calculated value of scheduler-enlistment delay is 10 jiffies.
+[    0.000000] rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=2
+[    0.000000] RCU Tasks Trace: Setting shift to 1 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=2.
+[    0.000000] NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
+[    0.000000] GICv3: GIC: Using split EOI/Deactivate mode
+[    0.000000] GICv3: 640 SPIs implemented
+[    0.000000] GICv3: 0 Extended SPIs implemented
+[    0.000000] Root IRQ handler: gic_handle_irq
+[    0.000000] GICv3: GICv3 features: 16 PPIs
+[    0.000000] GICv3: GICD_CTLR.DS=0, SCR_EL3.FIQ=0
+[    0.000000] GICv3: CPU0: found redistributor 0 region 0:0x000000000c080000
+[    0.000000] rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[    0.000000] arch_timer: cp15 timer running at 13.00MHz (phys).
+[    0.000000] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x2ff89eacb, max_idle_ns: 440795202429 ns
+[    0.000001] sched_clock: 56 bits at 13MHz, resolution 76ns, wraps every 4398046511101ns
+[    0.000093] Calibrating delay loop (skipped), value calculated using timer frequency.. 26.00 BogoMIPS (lpj=130000)
+[    0.000102] pid_max: default: 32768 minimum: 301
+[    0.002565] Mount-cache hash table entries: 2048 (order: 2, 16384 bytes, linear)
+[    0.002576] Mountpoint-cache hash table entries: 2048 (order: 2, 16384 bytes, linear)
+[    0.007729] cacheinfo: Unable to detect cache hierarchy for CPU 0
+[    0.008588] rcu: Hierarchical SRCU implementation.
+[    0.008597] rcu:     Max phase no-delay instances is 1000.
+[    0.008798] Timer migration: 1 hierarchy levels; 8 children per group; 1 crossnode level
+[    0.009017] smp: Bringing up secondary CPUs ...
+[    0.009421] Detected VIPT I-cache on CPU1
+[    0.009472] GICv3: CPU1: found redistributor 1 region 0:0x000000000c0a0000
+[    0.009504] CPU1: Booted secondary processor 0x0000000001 [0x410fd034]
+[    0.009590] smp: Brought up 1 node, 2 CPUs
+[    0.009596] SMP: Total of 2 processors activated.
+[    0.009599] CPU: All CPU(s) started at EL2
+[    0.009602] CPU features: detected: 32-bit EL0 Support
+[    0.009606] CPU features: detected: CRC32 instructions
+[    0.009633] alternatives: applying system-wide alternatives
+[    0.009774] CPU features: emulated: Privileged Access Never (PAN) using TTBR0_EL1 switching
+[    0.009917] Memory: 1004940K/1048576K available (9664K kernel code, 946K rwdata, 2976K rodata, 960K init, 295K bss, 40240K reserved, 0K cma-reserved)
+[    0.013483] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.013515] posixtimers hash table entries: 1024 (order: 2, 16384 bytes, linear)
+[    0.013548] futex hash table entries: 512 (32768 bytes on 1 NUMA nodes, total 32 KiB, linear).
+[    0.013589] 2G module region forced by RANDOMIZE_MODULE_REGION_FULL
+[    0.013596] 0 pages in range for non-PLT usage
+[    0.013599] 520528 pages in range for PLT usage
+[    0.015194] pinctrl core: initialized pinctrl subsystem
+[    0.016474] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    0.016824] DMA: preallocated 128 KiB GFP_KERNEL pool for atomic allocations
+[    0.016851] DMA: preallocated 128 KiB GFP_KERNEL|GFP_DMA pool for atomic allocations
+[    0.016872] DMA: preallocated 128 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocations
+[    0.017330] thermal_sys: Registered thermal governor 'fair_share'
+[    0.017334] thermal_sys: Registered thermal governor 'bang_bang'
+[    0.017337] thermal_sys: Registered thermal governor 'step_wise'
+[    0.017340] thermal_sys: Registered thermal governor 'user_space'
+[    0.017425] ASID allocator initialised with 65536 entries
+[    0.018105] pstore: Using crash dump compression: deflate
+[    0.018111] pstore: Registered ramoops as persistent store backend
+[    0.018113] ramoops: using 0x10000@0x42ff0000, ecc: 0
+[    0.019768] /soc/interrupt-controller@c000000: Fixed dependency cycle(s) with /soc/interrupt-controller@c000000
+[    0.039747] SCSI subsystem initialized
+[    0.039933] libata version 3.00 loaded.
+[    0.041893] clocksource: Switched to clocksource arch_sys_counter
+[    0.044365] NET: Registered PF_INET protocol family
+[    0.044508] IP idents hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[    0.046039] tcp_listen_portaddr_hash hash table entries: 512 (order: 1, 8192 bytes, linear)
+[    0.046056] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.046070] TCP established hash table entries: 8192 (order: 4, 65536 bytes, linear)
+[    0.046124] TCP bind hash table entries: 8192 (order: 6, 262144 bytes, linear)
+[    0.046328] TCP: Hash tables configured (established 8192 bind 8192)
+[    0.046629] MPTCP token hash table entries: 1024 (order: 3, 24576 bytes, linear)
+[    0.046763] UDP hash table entries: 512 (order: 3, 32768 bytes, linear)
+[    0.046799] UDP-Lite hash table entries: 512 (order: 3, 32768 bytes, linear)
+[    0.047063] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    0.047091] PCI: CLS 0 bytes, default 64
+[    0.048120] workingset: timestamp_bits=46 max_order=18 bucket_order=0
+[    0.053395] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.053406] jffs2: version 2.2 (NAND) (SUMMARY) (LZMA) (RTIME) (CMODE_PRIORITY) (c) 2001-2006 Red Hat, Inc.
+[    0.056365] cryptd: max_cpu_qlen set to 1000
+[    0.110561] gpio-export gpio-export: 2 gpio(s) exported
+[    0.115985] Serial: 8250/16550 driver, 3 ports, IRQ sharing disabled
+[    0.117336] printk: legacy console [ttyS0] disabled
+[    0.137772] 11002000.serial: ttyS0 at MMIO 0x11002000 (irq = 72, base_baud = 2500000) is a ST16650V2
+[    0.137818] printk: legacy console [ttyS0] enabled
+[    0.929163] mtk_rng trng: registered RNG driver
+[    0.931966] random: crng init done
+[    0.940689] loop: module loaded
+[    0.947541] spi-nand spi0.0: calibration result: 0x3
+[    0.952770] spi-nand spi0.0: Winbond SPI NAND was found.
+[    0.958075] spi-nand spi0.0: 256 MiB, block size: 128 KiB, page size: 2048, OOB size: 128
+[    0.966583] 2 fixed-partitions partitions found on MTD device spi0.0
+[    0.973261] Creating 2 MTD partitions on "spi0.0":
+[    0.978051] 0x000000000000-0x000000100000 : "bl2"
+[    0.984088] 0x000000100000-0x000010000000 : "ubi"
+[    1.114385] ubi0: default fastmap pool size: 100
+[    1.119007] ubi0: default fastmap WL pool size: 50
+[    1.123809] ubi0: attaching mtd1
+[    1.884912] ubi0: scanning is finished
+[    1.895156] ubi0: attached mtd1 (name "ubi", size 255 MiB)
+[    1.900647] ubi0: PEB size: 131072 bytes (128 KiB), LEB size: 126976 bytes
+[    1.907534] ubi0: min./max. I/O unit sizes: 2048/2048, sub-page size 2048
+[    1.914321] ubi0: VID header offset: 2048 (aligned 2048), data offset: 4096
+[    1.921269] ubi0: good PEBs: 2040, bad PEBs: 0, corrupted PEBs: 0
+[    1.927359] ubi0: user volume: 7, internal volumes: 1, max. volumes count: 128
+[    1.934573] ubi0: max/mean erase counter: 4/3, WL threshold: 4096, image sequence number: 2098228044
+[    1.943695] ubi0: available PEBs: 0, total reserved PEBs: 2040, PEBs reserved for bad PEB handling: 40
+[    1.952999] ubi0: background thread "ubi_bgt0d" started, PID 199
+[    1.954118] block ubiblock0_5: created from ubi0:5(fit)
+[    1.968809] mtk_soc_eth 15100000.ethernet: legacy DT: using hard-coded SRAM offset.
+[    1.976834] mtk_soc_eth 15100000.ethernet: legacy DT: missing interrupt-names.
+[    2.346889] mtk_soc_eth 15100000.ethernet eth0: mediatek frame engine at 0xffffffc080900000, irq 75
+[    2.356895] mtk_soc_eth 15100000.ethernet eth1: mediatek frame engine at 0xffffffc080900000, irq 75
+[    2.366980] i2c_dev: i2c /dev entries driver
+[    2.372892] mtk-wdt 1001c000.watchdog: Watchdog enabled (timeout=31 sec, nowayout=0)
+[    2.405414] NET: Registered PF_INET6 protocol family
+[    2.411372] Segment Routing with IPv6
+[    2.415117] In-situ OAM (IOAM) with IPv6
+[    2.419078] NET: Registered PF_PACKET protocol family
+[    2.424324] 8021q: 802.1Q VLAN Support v1.8
+[    2.447916] phy phy-soc:usb-phy@11e10000.1: type_sw - reg 0x218, index 0
+[    2.457182] FIT: Detected U-Boot 2026.07-OpenWrt-r35465-4b21f4aacc
+[    2.463416] FIT: Selected configuration: "config-1" (OpenWrt huasifei_ws1610-ubi)
+[    2.470900] FIT:           kernel sub-image 0x00001000..0x005dc259 "kernel-1" (ARM64 OpenWrt Linux-6.18.38)
+[    2.480743] FIT:          flat_dt sub-image 0x005dd000..0x005e2b7e "fdt-1" (ARM64 OpenWrt huasifei_ws1610-ubi device tree blob)
+[    2.492317] FIT:       filesystem sub-image 0x005e3000..0x00ccafff "rootfs-1" (ARM64 OpenWrt huasifei_ws1610-ubi rootfs)
+[    2.503849] block ubiblock0_5: mapped 1 uImage.FIT filesystem sub-image as /dev/fit0
+[    2.512522] clk: Disabling unused clocks
+[    2.516725] PM: genpd: Disabling unused power domains
+[    2.522202] check access for rdinit=/init failed: -2, ignoring
+[    2.531240] VFS: Mounted root (squashfs filesystem) readonly on device 259:0.
+[    2.538895] Freeing unused kernel memory: 960K
+[    2.543513] Run /sbin/init as init process
+[    2.547601]   with arguments:
+[    2.550557]     /sbin/init
+[    2.553291]   with environment:
+[    2.556420]     HOME=/
+[    2.558769]     TERM=linux
+[    2.784896] init: Console is alive
+[    2.788446] init: - watchdog -
+[    3.250091] kmodloader: loading kernel modules from /etc/modules-boot.d/*
+[    3.289444] usbcore: registered new interface driver usbfs
+[    3.295005] usbcore: registered new interface driver hub
+[    3.300355] usbcore: registered new device driver usb
+[    3.306843] gpio_button_hotplug: loading out-of-tree module taints kernel.
+[    3.320923] xhci-mtk 11200000.usb: supply vbus not found, using dummy regulator
+[    3.329166] xhci-mtk 11200000.usb: xHCI Host Controller
+[    3.334455] xhci-mtk 11200000.usb: new USB bus registered, assigned bus number 1
+[    3.344847] xhci-mtk 11200000.usb: hcc params 0x01403f99 hci version 0x110 quirks 0x0000000000200010
+[    3.354080] xhci-mtk 11200000.usb: irq 78, io mem 0x11200000
+[    3.359858] xhci-mtk 11200000.usb: xHCI Host Controller
+[    3.365102] xhci-mtk 11200000.usb: new USB bus registered, assigned bus number 2
+[    3.372501] xhci-mtk 11200000.usb: Host supports USB 3.2 Enhanced SuperSpeed
+[    3.380024] hub 1-0:1.0: USB hub found
+[    3.383831] hub 1-0:1.0: 1 port detected
+[    3.388101] usb usb2: We don't know the algorithms for LPM for this host, disabling LPM.
+[    3.396590] hub 2-0:1.0: USB hub found
+[    3.400370] hub 2-0:1.0: 1 port detected
+[    3.414480] kmodloader: done loading kernel modules from /etc/modules-boot.d/*
+[    3.432474] init: - preinit -
+[    3.832797] mtk_soc_eth 15100000.ethernet wan: renamed from eth0
+[    3.841101] mtk_soc_eth 15100000.ethernet lan: renamed from eth1
+[    3.869936] mtk_soc_eth 15100000.ethernet lan: PHY [mdio-bus:00] driver [MediaTek MT7981 PHY] (irq=POLL)
+[    3.883637] mtk_soc_eth 15100000.ethernet lan: configuring for phy/gmii link mode
+Press the [f] key and hit [enter] to enter failsafe mode
+Press the [1], [2], [3] or [4] key and hit [enter] to select the debug level
+[    8.072097] mtk_soc_eth 15100000.ethernet lan: Link is Up - 1Gbps/Full - flow control rx/tx
+[    8.273981] UBIFS (ubi0:6): default file-system created
+[    8.279607] UBIFS (ubi0:6): Mounting in unauthenticated mode
+[    8.285445] UBIFS (ubi0:6): background thread "ubifs_bgt0_6" started, PID 727
+[    8.328371] UBIFS (ubi0:6): UBIFS: mounted UBI device 0, volume 6, name "rootfs_data"
+[    8.336232] UBIFS (ubi0:6): LEB size: 126976 bytes (124 KiB), min./max. I/O unit sizes: 2048 bytes/2048 bytes
+[    8.346146] UBIFS (ubi0:6): FS size: 225382400 bytes (214 MiB, 1775 LEBs), max 1787 LEBs, journal size 11300864 bytes (10 MiB, 89 LEBs)
+[    8.358311] UBIFS (ubi0:6): reserved for root: 4952683 bytes (4836 KiB)
+[    8.364917] UBIFS (ubi0:6): media format: w5/r0 (latest is w5/r0), UUID 482F1202-5054-4FD5-9047-ABBBDC974DCA, small LPT model
+[    8.377637] mount_root: overlay filesystem has not been fully initialized yet
+[    8.385092] mount_root: switching to ubifs overlay
+[    8.395137] overlayfs: null uuid detected in lower fs '/', falling back to xino=off,index=off,nfs_export=off.
+[    8.408972] urandom-seed: Seed file not found (/etc/urandom.seed)
+cfg016cb7
+cfg026cb7
+grep: /etc/fw_env.config: No such file or directory
+- generating board file -
+[    9.286803] mtk_soc_eth 15100000.ethernet lan: Link is Down
+[    9.298995] procd: - early -
+[    9.302009] procd: - watchdog -
+[    9.878544] procd: - watchdog -
+[    9.883423] procd: - ubus -
+[   10.038560] procd: - init -
+Please press Enter to activate this console.
+[   10.521449] kmodloader: loading kernel modules from /etc/modules.d/*
+[   10.550315] urngd: v1.0.2 started.
+[   10.621956] ledtrig_network: LED green:wlan - trigger wlan(link tx rx) attached
+[   10.645374] crypto-safexcel 10320000.crypto: EIP97:230(0,1,4,4)-HIA:270(0,5,5),PE:150/433(alg:7fcdfc00)/0/0/0
+[   10.779500] usbcore: registered new interface driver cdc_wdm
+[   10.785896] Loading modules backported from Linux version v6.18.26-0-g1fe060681
+[   10.793239] Backport generated by backports.git 6ecbb44
+[   10.809654] usbcore: registered new interface driver usbserial_generic
+[   10.816296] usbserial: USB Serial support registered for generic
+[   10.823403] usbcore: registered new interface driver cdc_ether
+[   10.830510] usbcore: registered new interface driver cdc_ncm
+[   11.216983] mt798x-wmac 18000000.wifi: HW/SW Version: 0x8a108a10, Build Time: 20260515121445a
+[   11.396691] mt798x-wmac 18000000.wifi: WM Firmware Version: ____000000, Build Time: 20260515121504
+[   11.489198] mt798x-wmac 18000000.wifi: WA Firmware Version: DEV_000000, Build Time: 20260515121859
+[   11.631714] PPP generic driver version 2.4.2
+[   11.638137] NET: Registered PF_PPPOX protocol family
+[   11.645983] usbcore: registered new interface driver qmi_wwan
+[   11.662028] usbcore: registered new interface driver option
+[   11.667688] usbserial: USB Serial support registered for GSM modem (1-port)
+[   11.678638] kmodloader: done loading kernel modules from /etc/modules.d/*
+[   19.160377] mtk_soc_eth 15100000.ethernet lan: PHY [mdio-bus:00] driver [MediaTek MT7981 PHY] (irq=POLL)
+[   19.174211] mtk_soc_eth 15100000.ethernet lan: configuring for phy/gmii link mode
+[   19.182684] br-lan: port 1(lan) entered blocking state
+[   19.187829] br-lan: port 1(lan) entered disabled state
+[   19.193020] mtk_soc_eth 15100000.ethernet lan: entered allmulticast mode
+[   19.199881] mtk_soc_eth 15100000.ethernet lan: entered promiscuous mode
+[   19.262082] mtk_soc_eth 15100000.ethernet wan: PHY [mdio-bus:06] driver [RTL8221B-VB-CG 2.5Gbps PHY] (irq=53)
+[   19.286023] mtk_soc_eth 15100000.ethernet wan: configuring for phy/2500base-x link mode
+[   19.620654] ledtrig_network: wlan - interface phy0-ap0 registered
+[   19.676015] br-lan: port 2(phy0-ap0) entered blocking state
+[   19.681601] br-lan: port 2(phy0-ap0) entered disabled state
+[   19.687288] mt798x-wmac 18000000.wifi phy0-ap0: entered allmulticast mode
+[   19.694361] mt798x-wmac 18000000.wifi phy0-ap0: entered promiscuous mode
+[   19.701191] br-lan: port 2(phy0-ap0) entered blocking state
+[   19.706794] br-lan: port 2(phy0-ap0) entered forwarding state
+[   19.722929] br-lan: port 2(phy0-ap0) entered disabled state
+[   19.855605] br-lan: port 2(phy0-ap0) entered blocking state
+[   19.861197] br-lan: port 2(phy0-ap0) entered forwarding state
+[   20.160453] ledtrig_network: wlan - interface phy1-ap0 registered
+[   20.233893] br-lan: port 3(phy1-ap0) entered blocking state
+[   20.239513] br-lan: port 3(phy1-ap0) entered disabled state
+[   20.245276] mt798x-wmac 18000000.wifi phy1-ap0: entered allmulticast mode
+[   20.252341] mt798x-wmac 18000000.wifi phy1-ap0: entered promiscuous mode
+[   20.994306] br-lan: port 3(phy1-ap0) entered blocking state
+[   20.999893] br-lan: port 3(phy1-ap0) entered forwarding state
+[   22.312153] mtk_soc_eth 15100000.ethernet lan: Link is Up - 1Gbps/Full - flow control rx/tx
+[   22.320578] br-lan: port 1(lan) entered blocking state
+[   22.325742] br-lan: port 1(lan) entered forwarding state
+[   24.382067] usb 2-1: new SuperSpeed USB device number 2 using xhci-mtk
+[   24.419505] usb 2-1: LPM exit latency is zeroed, disabling LPM.
+[   24.426388] usb 2-1: config 1 has an invalid interface number: 10 but max is 5
+[   24.433694] usb 2-1: config 1 has an invalid interface number: 11 but max is 5
+[   24.440909] usb 2-1: config 1 has an invalid interface number: 11 but max is 5
+[   24.448210] usb 2-1: config 1 has no interface number 4
+[   24.453476] usb 2-1: config 1 has no interface number 5
+[   24.474989] option 2-1:1.0: GSM modem (1-port) converter detected
+[   24.481397] usb 2-1: GSM modem (1-port) converter now attached to ttyUSB0
+[   24.488672] option 2-1:1.1: GSM modem (1-port) converter detected
+[   24.495168] usb 2-1: GSM modem (1-port) converter now attached to ttyUSB1
+[   24.520387] option 2-1:1.2: GSM modem (1-port) converter detected
+[   24.526864] usb 2-1: GSM modem (1-port) converter now attached to ttyUSB2
+[   24.539086] option 2-1:1.3: GSM modem (1-port) converter detected
+[   24.545493] usb 2-1: GSM modem (1-port) converter now attached to ttyUSB3
+[   24.557709] cdc_ether 2-1:1.10 usb0: register 'cdc_ether' at usb-11200000.usb-1, CDC Ethernet Device, a2:a9:86:41:4f:18

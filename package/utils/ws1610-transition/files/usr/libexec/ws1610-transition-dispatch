@@ -1,0 +1,15 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+
+. /usr/libexec/ws1610-transition-common.sh
+
+case "$(ws_board_name)" in
+huasifei,ws1610-transition)
+	exec /usr/libexec/ws1610-transition-stage
+	;;
+huasifei,ws1610-converter)
+	exec /usr/libexec/ws1610-transition-convert
+	;;
+esac
+
+exit 0

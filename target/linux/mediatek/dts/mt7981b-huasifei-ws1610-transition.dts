@@ -1,0 +1,95 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+
+/dts-v1/;
+
+#include "mt7981b-huasifei-ws1610-ubi.dts"
+
+/ {
+	model = "Huasifei WS1610 (vendor-to-UBI transition)";
+	compatible = "huasifei,ws1610-transition", "mediatek,mt7981b";
+
+	chosen {
+		/delete-property/ rootdisk;
+		bootargs = "console=ttyS0,115200 root=/dev/ram0 panic=-1";
+	};
+};
+
+&spi0 {
+	nand@0 {
+		mediatek,nmbm;
+		mediatek,bmt-max-ratio = <1>;
+		mediatek,bmt-max-reserved-blocks = <64>;
+
+		partitions {
+			/delete-node/ partition@0;
+			/delete-node/ partition@100000;
+
+			partition@0 {
+				label = "BL2";
+				reg = <0x0000000 0x0100000>;
+				read-only;
+			};
+
+			partition@100000 {
+				label = "u-boot-env";
+				reg = <0x0100000 0x0080000>;
+			};
+
+			factory: partition@180000 {
+				label = "Factory";
+				reg = <0x0180000 0x0200000>;
+				read-only;
+
+				nvmem-layout {
+					compatible = "fixed-layout";
+					#address-cells = <1>;
+					#size-cells = <1>;
+
+					eeprom_factory_0: eeprom@0 {
+						reg = <0x0 0x1000>;
+					};
+
+					macaddr_factory_4: macaddr@4 {
+						compatible = "mac-base";
+						reg = <0x4 0x6>;
+						#nvmem-cell-cells = <1>;
+					};
+				};
+			};
+
+			partition@380000 {
+				label = "FIP";
+				reg = <0x0380000 0x0200000>;
+				read-only;
+			};
+
+			partition@580000 {
+				label = "woem";
+				reg = <0x0580000 0x00a0000>;
+				read-only;
+			};
+
+			partition@620000 {
+				label = "ubi";
+				reg = <0x0620000 0x07000000>;
+			};
+
+			partition@7620000 {
+				label = "ubi2";
+				reg = <0x07620000 0x07000000>;
+			};
+
+			partition@e620000 {
+				label = "wtinfo";
+				reg = <0x0e620000 0x00060000>;
+				read-only;
+			};
+
+			partition@e680000 {
+				label = "nvram";
+				reg = <0x0e680000 0x00060000>;
+				read-only;
+			};
+		};
+	};
+};

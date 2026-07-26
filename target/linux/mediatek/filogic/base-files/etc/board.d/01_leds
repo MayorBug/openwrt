@@ -140,7 +140,8 @@ huasifei,wh3000)
 huasifei,wh3000r-nand)
 	ucidef_set_led_netdev "wan" "WAN" "blue:wan-online" "wan" "link"
 	;;
-huasifei,ws1610-ubi)
+huasifei,ws1610-ubi|\
+huasifei,ws1610-transition)
 	ucidef_set_led_netdev "lan" "LAN" "green:lan" "lan" "link tx rx"
 	;;
 iptime,ax3000q)
