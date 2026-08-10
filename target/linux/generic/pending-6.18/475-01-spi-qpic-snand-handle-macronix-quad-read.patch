@@ -1,0 +1,42 @@
+From: Md Sadre Alam <md.alam@oss.qualcomm.com>
+Date: Thu, 16 Jul 2026 10:57:44 +0530
+Subject: [PATCH 3/3] spi: spi-qpic-snand: Handle Macronix quad read opcode 0x6b
+
+Macronix SPI-NAND devices use opcode 0x6b for quad output cache reads,
+while most other devices use opcode 0xeb. The QPIC SPI-NAND driver does
+not currently recognize opcode 0x6b, causing read operations to fail
+when Macronix devices select this cache read variant.
+
+Add the Macronix-specific read opcode to the command mapping logic and
+treat it the same as the existing quad read operations.
+
+This allows Macronix SPI-NAND devices to operate correctly in quad read
+mode.
+
+Signed-off-by: Md Sadre Alam <md.alam@oss.qualcomm.com>
+Link: https://lore.kernel.org/all/20260716-quad-v1-3-636f74da17e1@qti.qualcomm.com/
+---
+ drivers/spi/spi-qpic-snand.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+index 5c077f7023f1..e2f5dce15946 100644
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -52,6 +52,7 @@
+ #define SPINAND_READ_CACHE		0x0b
+ #define SPINAND_READ			0x13
+ #define SPINAND_READ_QUAD		0xeb
++#define SPINAND_READ_MACRONIX		0x6b
+ #define SPINAND_ERASE			0xd8
+ #define SPINAND_WRITE_EN		0x06
+ #define SPINAND_PROGRAM_EXECUTE		0x10
+@@ -1023,6 +1024,7 @@ static int qcom_spi_cmd_mapping(struct qcom_nand_controller *snandc,
+ 	case SPINAND_READ:
+ 	case SPINAND_READ_QUAD:
+ 	case SPINAND_READ_CACHE:
++	case SPINAND_READ_MACRONIX:
+ 		if (snandc->qspi->raw_rw) {
+ 			*cmd = (PAGE_ACC | LAST_PAGE | transfer_mode |
+ 					SPI_WP | SPI_HOLD | OP_PAGE_READ);
+

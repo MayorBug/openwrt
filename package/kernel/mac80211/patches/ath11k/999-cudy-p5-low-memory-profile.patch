@@ -1,0 +1,57 @@
+From: Georg Seema <georgseema@gmail.com>
+Date: Mon, 10 Aug 2026 23:18:08 +0300
+Subject: [PATCH] wifi: ath11k: reduce datapath rings for 256 MiB devices
+
+Based on the 256 MiB ath11k profile by hzy <hzyitc@outlook.com> and the
+related OpenWrt small-buffer proposal.  The five ring sizes below match
+that prior work:
+
+Link: https://github.com/David-Croose/openrax3000q/blob/59ca15fcd69ea0e6f1625f2c6b24a264994faee5/package/kernel/mac80211/patches/all-ipq50xx/602-ath11k-Add-256MB-profile.patch
+Link: https://github.com/hzyitc/openwrt-redmi-ax3000/commit/442f0e252c6443358af49711c04ce15707784f58
+Link: https://github.com/openwrt/openwrt/pull/21495
+
+The Cudy P5 has 256 MiB RAM and runs the IPQ5018 and QCN6122 radios with
+firmware memory mode 2.  Its stock qdf.ko contains a build path naming
+qca-wifi-lowmem-profile, and the stock log reports a tx_desc_limit of 4096
+for each radio.
+
+Reduce the largest fixed host datapath rings so both radios can operate in
+the available memory.  The complete older profile also changed target
+limits, firmware memory mode, and cold-boot calibration.  This patch only
+imports its five datapath ring sizes.  The DTS selects firmware memory mode
+2 separately.
+
+This patch currently changes the shared ath11k build.  It must remain local
+to Cudy P5 builds until ath11k has a runtime-selectable low-memory profile.
+
+Signed-off-by: Georg Seema <georgseema@gmail.com>
+---
+--- a/drivers/net/wireless/ath/ath11k/dp.h
++++ b/drivers/net/wireless/ath/ath11k/dp.h
+@@ -206,21 +206,21 @@
+ #define DP_WBM_RELEASE_RING_SIZE	64
+ #define DP_TCL_DATA_RING_SIZE		512
+ #define DP_TCL_DATA_RING_SIZE_WCN6750	2048
+-#define DP_TX_COMP_RING_SIZE		32768
++#define DP_TX_COMP_RING_SIZE		2048
+ #define DP_TX_IDR_SIZE			DP_TX_COMP_RING_SIZE
+ #define DP_TCL_CMD_RING_SIZE		32
+ #define DP_TCL_STATUS_RING_SIZE		32
+ #define DP_REO_DST_RING_MAX		4
+ #define DP_REO_DST_RING_SIZE		2048
+ #define DP_REO_REINJECT_RING_SIZE	32
+ #define DP_RX_RELEASE_RING_SIZE		1024
+ #define DP_REO_EXCEPTION_RING_SIZE	128
+ #define DP_REO_CMD_RING_SIZE		256
+ #define DP_REO_STATUS_RING_SIZE		2048
+-#define DP_RXDMA_BUF_RING_SIZE		4096
++#define DP_RXDMA_BUF_RING_SIZE		1024
+ #define DP_RXDMA_REFILL_RING_SIZE	2048
+ #define DP_RXDMA_ERR_DST_RING_SIZE	1024
+-#define DP_RXDMA_MON_STATUS_RING_SIZE	1024
+-#define DP_RXDMA_MONITOR_BUF_RING_SIZE	4096
+-#define DP_RXDMA_MONITOR_DST_RING_SIZE	2048
++#define DP_RXDMA_MON_STATUS_RING_SIZE	512
++#define DP_RXDMA_MONITOR_BUF_RING_SIZE	128
++#define DP_RXDMA_MONITOR_DST_RING_SIZE	128
+ #define DP_RXDMA_MONITOR_DESC_RING_SIZE	4096

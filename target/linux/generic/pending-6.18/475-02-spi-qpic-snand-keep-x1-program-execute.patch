@@ -1,0 +1,31 @@
+From: Georg Seema <georgseema@gmail.com>
+Date: Tue, 11 Aug 2026 02:00:00 +0300
+Subject: [PATCH] spi: spi-qpic-snand: keep x1 program execute support
+
+The QPIC quad-mode series only initializes the PROGRAM_EXECUTE command
+when quad mode is active. This leaves the command value undefined for
+SPI-NAND devices that use x1 transfers.
+
+PROGRAM_EXECUTE has no data phase. Initialize it unconditionally as an x1
+command and address operation.
+
+This is a local correction for the P5 test backport of Md Sadre Alam's
+quad-mode series.
+
+Signed-off-by: Georg Seema <georgseema@gmail.com>
+Link: https://lore.kernel.org/all/20260716-quad-v1-2-636f74da17e1@qti.qualcomm.com/
+---
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -1040,9 +1040,8 @@ static int qcom_spi_cmd_mapping(struct q
+ 		*cmd = SPINAND_WRITE_EN;
+ 		break;
+ 	case SPINAND_PROGRAM_EXECUTE:
+-		if (snandc->qspi->quad_mode)
+-			*cmd = (PAGE_ACC | LAST_PAGE | transfer_mode |
+-					SPI_WP | SPI_HOLD | OP_PROGRAM_PAGE);
++		*cmd = (PAGE_ACC | LAST_PAGE | transfer_mode |
++			SPI_WP | SPI_HOLD | OP_PROGRAM_PAGE);
+ 		break;
+ 	case SPINAND_PROGRAM_LOAD:
+ 		*cmd = SPINAND_PROGRAM_LOAD;
