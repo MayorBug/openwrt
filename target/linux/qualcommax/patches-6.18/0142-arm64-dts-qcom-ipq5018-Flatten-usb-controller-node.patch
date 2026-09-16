@@ -56,7 +56,7 @@ Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
  			clocks = <&gcc GCC_USB0_MASTER_CLK>,
  				 <&gcc GCC_SYS_NOC_USB0_AXI_CLK>,
 @@ -599,30 +592,32 @@
-				      "iface",
+ 				      "iface",
  				      "sleep",
  				      "mock_utmi";
 +			assigned-clocks = <&gcc GCC_USB0_MOCK_UTMI_CLK>;
