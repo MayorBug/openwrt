@@ -1,8 +1,57 @@
 #!/bin/sh
 
-[ -e /lib/firmware/$FIRMWARE ] && exit 0
-
 . /lib/functions/caldata.sh
+
+board=$(board_name)
+
+if [ -e "/lib/firmware/$FIRMWARE" ]; then
+	case "$board:$FIRMWARE" in
+	cudy,p5:ath11k/IPQ5018/hw1.0/cal-ahb-c000000.wifi.bin|\
+	cudy,p5:ath11k/QCN6122/hw1.0/cal-ahb-b00a040.wifi.bin)
+		[ "$(wc -c < "/lib/firmware/$FIRMWARE")" -eq 131072 ] 2>/dev/null && exit 0
+		logger -t caldata "replacing incomplete P5 calibration file: $FIRMWARE"
+		;;
+	*)
+		exit 0
+		;;
+	esac
+fi
+
+p5_caldata_error() {
+	logger -t caldata "$FIRMWARE: $*"
+	caldata_die "$*"
+}
+
+p5_caldata_extract() (
+	local offset=$1
+	local mac_offset=$2
+	local target="/lib/firmware/$FIRMWARE"
+	local count=131072
+	local mtd bdinfo wlan_mac tmp
+
+	mtd=$(find_mtd_chardev "0:art")
+	bdinfo=$(find_mtd_chardev bdinfo)
+	[ -n "$mtd" ] && [ -n "$bdinfo" ] || p5_caldata_error "ART or bdinfo partition not found"
+	wlan_mac=$(get_mac_binary "$bdinfo" 0xde00)
+	[ "${#wlan_mac}" -eq 17 ] || p5_caldata_error "cannot read MAC address from bdinfo"
+	wlan_mac=$(macaddr_add "$wlan_mac" "$mac_offset")
+
+	mkdir -p "${target%/*}" || p5_caldata_error "cannot create calibration directory"
+	tmp=$(mktemp "$target.XXXXXX") || p5_caldata_error "cannot create calibration temporary file"
+	trap 'rm -f "$tmp"' 0
+	trap 'exit 1' 1 2 15
+
+	caldata_dd "$mtd" "$tmp" "$count" "$offset" || p5_caldata_error "ART calibration read failed"
+	[ "$(wc -c < "$tmp")" -eq "$count" ] || p5_caldata_error "ART calibration read is incomplete"
+	(
+		ath11k_patch_mac "$wlan_mac" 0 "$tmp"
+		ath11k_set_macflag "$tmp"
+	) || p5_caldata_error "calibration MAC patch failed"
+	[ "$(wc -c < "$tmp")" -eq "$count" ] || p5_caldata_error "calibration size changed after MAC patch"
+	chmod 644 "$tmp" || p5_caldata_error "cannot set calibration file permissions"
+	mv -f "$tmp" "$target" || p5_caldata_error "cannot publish calibration file"
+	logger -t caldata "prepared P5 calibration file: $FIRMWARE ($count bytes)"
+)
 
 # tplink,ex511-v2: 0:ART ships fully erased (verified 100% 0xFF). Stock reads
 # ART, fails to LZMA-decompress it, and falls back to a zero-filled dummy
@@ -10,8 +59,6 @@
 # board-data defaults. ath11k hard-fails if the cal file is simply absent, so
 # provide the same zero-filled dummy stock ends up with. Do NOT synthesise one
 # from the board data blob -- that loads but breaks scanning.
-
-board=$(board_name)
 
 case "$FIRMWARE" in
 "ath11k/IPQ5018/hw1.0/cal-ahb-c000000.wifi.bin")
@@ -24,10 +71,7 @@ case "$FIRMWARE" in
 		ath11k_remove_regdomain
 		;;
 	cudy,p5)
-		caldata_extract "0:art" 0x1000 0x20000
-		wlan_mac=$(get_mac_binary "$(find_mtd_chardev bdinfo)" 0xde00)
-		ath11k_patch_mac "$wlan_mac" 0
-		ath11k_set_macflag
+		p5_caldata_extract 0x1000 0 || exit 1
 		;;
 	elecom,wrc-x3000gs2|\
 	elecom,wrc-x3000gst2|\
@@ -111,10 +155,7 @@ case "$FIRMWARE" in
 		ath11k_set_macflag
 		;;
 	cudy,p5)
-		caldata_extract "0:art" 0x26800 0x20000
-		wlan_mac=$(get_mac_binary "$(find_mtd_chardev bdinfo)" 0xde00)
-		ath11k_patch_mac "$(macaddr_add "$wlan_mac" 2)" 0
-		ath11k_set_macflag
+		p5_caldata_extract 0x26800 2 || exit 1
 		;;
 	elecom,wrc-x3000gs2|\
 	elecom,wrc-x3000gst2|\
